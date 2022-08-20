@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "hexlet-code"
+version = "0.1.0"
+description = "terminal utility to download html pages from assigned address"
+authors = ["tork <yuriy.kormin@gmail.com>"]
+packages = [
+  { include = "pageloader" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+flake8 = "^5.0.4"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+page-loader = "pageloader.scripts.pageloader:main"
