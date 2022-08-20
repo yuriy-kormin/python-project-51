@@ -3,7 +3,7 @@ from pageloader.cli import parse_args
 
 
 def main():
-    args = parse_args()
+    parse_args()
 
 
 if __name__ == '__main__':
