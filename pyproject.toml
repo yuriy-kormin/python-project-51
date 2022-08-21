@@ -9,6 +9,8 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
+bs4 = "^0.0.1"
+requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
