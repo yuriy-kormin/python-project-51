@@ -1,4 +1,9 @@
+import os
+import requests
 
 
-def download(source_address, destination_path):
-    return "hello"
+def download(address, path = None):
+    if path is None:
+        path = os.getcwd()
+    request = requests.get(address)
+    return request.text
