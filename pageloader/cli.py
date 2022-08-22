@@ -6,16 +6,16 @@ def parse_args():
         prog='page-loader',
         description='page downloader'
     )
-    parser.add_argument (
+    parser.add_argument(
         '--output',
-        type = str,
-        help = 'set destination EXISTING folder',
-        default = None
+        type=str,
+        help='set destination EXISTING folder',
+        default=None
     )
-    parser.add_argument (
+    parser.add_argument(
         'address',
-        type = str,
-        help = 'resource address to download'
+        type=str,
+        help='resource address to download'
     )
     args = parser.parse_args()
     return args
