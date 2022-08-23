@@ -12,7 +12,7 @@ def download(address, path=None):
     file_path = os.path.join(path, render_name(address, 'html'))
     save_to_file(request.text, file_path)
     subdir_name = make_subdir(address, path)
-    result = parse_html(file_path, subdir_name)
+    parse_html(file_path, subdir_name)
     return file_path
 
 
@@ -25,7 +25,6 @@ def parse_html(file_path, subdir_name):
         for tag in tags:
             res = download_image(tag['src'], subdir_name)
             tag['src'] = res
-        print(tags,'-'*80,'\n')
         f.seek(0)
         f.write(str(soup))
     return result
