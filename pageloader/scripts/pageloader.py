@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pageloader.cli import parse_args
-from pageloader.download import download
+from pageloader import download
 
 
 def main():

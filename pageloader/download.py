@@ -15,7 +15,7 @@ def download(address, path=None):
 
 def render_filename(address):
     filename = re.sub(r'(^https?:\/\/|\.[a-zA-Z]+$)', '', address)
-    filename = re.sub(r'[^0-9a-zA-Z]', '-', filename)
+    filename = re.sub(r'[^\da-zA-Z]', '-', filename)
     return f'{filename}.html'
 
 

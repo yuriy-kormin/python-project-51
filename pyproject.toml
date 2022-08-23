@@ -2,7 +2,7 @@
 name = "hexlet-code"
 version = "0.1.0"
 description = "terminal utility to download html pages from assigned address"
-authors = ["tork <yuriy.kormin@gmail.com>"]
+authors = ["YUriy Kormin <yuriy.kormin@gmail.com>"]
 packages = [
   { include = "pageloader" },
 ]
@@ -16,6 +16,7 @@ requests = "^2.28.1"
 pytest = "^7.1.2"
 pytest-cov = "^3.0.0"
 flake8 = "^5.0.4"
+pook = "^1.0.2"
 
 
 [build-system]
@@ -24,3 +25,8 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 page-loader = "pageloader.scripts.pageloader:main"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
