@@ -6,7 +6,7 @@ from pageloader import download
 
 @pook.on
 def test_result_file(test_url, test_filename):
-    test_file_data = '<HTML> HELLO! ITs a test html</HTML>'
+    test_file_data = '<html> HELLO! ITs a test html</html>'
     pook.get(test_url, response_json={'body': test_file_data})
     with tempfile.TemporaryDirectory() as tmpdirname:
         download(test_url, tmpdirname)
