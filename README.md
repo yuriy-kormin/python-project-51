@@ -7,3 +7,6 @@
 Its a CLI utility to download resources from remote host locally
 
 ### USAGE:
+page-loader [--output OUTPUT] address
+
+[![asciicast](https://asciinema.org/a/516540.svg)](https://asciinema.org/a/516540)

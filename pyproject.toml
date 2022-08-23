@@ -2,14 +2,13 @@
 name = "hexlet-code"
 version = "0.1.0"
 description = "terminal utility to download html pages from assigned address"
-authors = ["YUriy Kormin <yuriy.kormin@gmail.com>"]
+authors = ["Yuriy Kormin <yuriy.kormin@gmail.com>"]
 packages = [
   { include = "pageloader" },
 ]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-bs4 = "^0.0.1"
 requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]

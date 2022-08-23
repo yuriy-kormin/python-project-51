@@ -2,7 +2,7 @@ install:
 	poetry install
 
 package-install:
-	pip install --user dist/*.whl
+	pip install --user --force-reinstall dist/*.whl
 
 lint:
 	poetry run flake8 pageloader
