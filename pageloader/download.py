@@ -39,8 +39,9 @@ def download_image(address, subdir_name):
 
 def make_subdir(address, path):
     name = render_name(address, 'subdir')
-    os.makedirs(os.path.join(path, name), exist_ok=True)
-    return name
+    subdir_path = os.path.join(path, name)
+    os.makedirs(subdir_path, exist_ok=True)
+    return subdir_path
 
 
 def render_name(address, output_type):
