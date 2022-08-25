@@ -1,11 +1,9 @@
 import tempfile
-import pook
 from pageloader import download
 
 
-@pook.on
-def test_request(test_url, test_filename):
-    mock = pook.get(test_url)
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        download(test_url, tmpdirname)
-        assert mock.calls == 1
+def test_request(test_url, test_filename, requests_mock):
+    req_mock = requests_mock.get(test_url)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        download(test_url, tmpdir)
+    assert req_mock.call_count == 1

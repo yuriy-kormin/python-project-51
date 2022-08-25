@@ -77,6 +77,14 @@ tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.1
 toml = ["tomli"]
 
 [[package]]
+name = "filetype"
+version = "1.1.0"
+description = "Infer file type and MIME type of any file/buffer. No external dependencies."
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "flake8"
 version = "5.0.4"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -286,6 +294,22 @@ use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 
 [[package]]
+name = "requests-mock"
+version = "1.9.3"
+description = "Mock out responses from the requests package"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests = ">=2.3,<3"
+six = "*"
+
+[package.extras]
+fixture = ["fixtures"]
+test = ["fixtures", "mock", "purl", "pytest", "sphinx", "testrepository (>=0.0.18)", "testtools"]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -333,7 +357,7 @@ python-versions = ">=3.4"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "b80e64d2ca57e2cd8a1c54e510fd7a68ce67aabe60693ba16edcdefbe4fb815f"
+content-hash = "146345b569f102baf1fac5a8146ec811b924f9018a558e73ce53aee038c73c6e"
 
 [metadata.files]
 atomicwrites = []
@@ -343,6 +367,7 @@ certifi = []
 charset-normalizer = []
 colorama = []
 coverage = []
+filetype = []
 flake8 = []
 furl = []
 idna = []
@@ -361,6 +386,7 @@ pyrsistent = []
 pytest = []
 pytest-cov = []
 requests = []
+requests-mock = []
 six = []
 soupsieve = []
 tomli = []

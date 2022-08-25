@@ -1,15 +1,13 @@
 import os
 import tempfile
-import pook
 from pageloader import download
 
 
-@pook.on
-def test_result_file(test_url, test_filename):
-    test_file_data = '<html> HELLO! ITs a test html</html>'
-    pook.get(test_url, response_json={'body': test_file_data})
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        download(test_url, tmpdirname)
-        f = open(os.path.join(tmpdirname, test_filename), 'r')
-        file_data = f.readlines()
-        assert file_data == ['{\n', f'    "body": "{test_file_data}"\n', '}']
+def test_result_html(test_url, test_filename, simple_html_content, requests_mock):
+    req_mock = requests_mock.get(test_url, text=simple_html_content)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        result_path = download(test_url, tmpdir)
+        result_html_path = os.path.join(result_path, test_filename)
+        with open(result_path, 'r') as f:
+            result_html_content = f.read()
+    assert result_html_content == simple_html_content

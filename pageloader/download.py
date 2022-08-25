@@ -27,7 +27,7 @@ def parse_html(source_address, file_path, subdir_name):
                 res = download_image(tag['src'], subdir_name)
                 tag['src'] = res
         f.seek(0)
-        f.write(str(soup))
+        f.write(soup.prettify())
     return result
 
 
