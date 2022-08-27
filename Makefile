@@ -5,7 +5,7 @@ package-install:
 	pip install --user --force-reinstall dist/*.whl
 
 lint:
-	poetry run flake8 pageloader
+	poetry run flake8 pageloader tests
 
 build:
 	poetry build

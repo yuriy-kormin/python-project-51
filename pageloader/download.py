@@ -22,29 +22,37 @@ def parse_html(src_address, file_path, subdir_name):
         file_data = f.read()
         soup = BeautifulSoup(file_data, 'html.parser')
         process_img_src(soup, src_address, subdir_name)
+        process_other_src(soup, src_address, subdir_name)
         f.seek(0)
         f.write(soup.prettify())
     return result
 
 
+def process_other_src(soup, src_address, subdir):
+    for tag_name in ('link', 'script'):
+        tags = soup.findAll(tag_name, {'href': True})
+        for tag in tags:
+            if need_to_download(src_address, tag['href']):
+                tag['href'] = download_file(tag['href'], subdir)
+
+
 def process_img_src(soup, src_address, subdir):
     tags = soup.findAll('img')
     for tag in tags:
-        if is_same_netloc(src_address, tag['src']):
-            res = download_image(tag['src'], subdir)
-            tag['src'] = res
+        if need_to_download(src_address, tag['src']):
+            tag['src'] = download_file(tag['src'], subdir)
 
 
-def is_same_netloc(src_address, obj_href):
+def need_to_download(src_address, obj_href):
     source_url, img_url = map(url_parse, (src_address, obj_href))
-    # print ('src and url'+ str(source_url['loc'])+str(img_url['loc']))
-    if img_url['loc'] == source_url['loc']:
-        print('downloading....')
+    print(obj_href)
+    _, ext = os.path.splitext(img_url['full_path'])
+    if img_url['loc'] == source_url['loc'] and len(ext) > 0:
         return True
 
 
-def download_image(address, subdir_name):
-    file_path = os.path.join(subdir_name, render_name(address, 'image_name'))
+def download_file(address, subdir_name):
+    file_path = os.path.join(subdir_name, render_name(address, 'file_name'))
     request = requests.get(address, stream=True)
     save_to_file(request.content, file_path, binary=True)
     return file_path
@@ -63,7 +71,7 @@ def render_name(address, output_type):
         return f"{url['loc']}{url['path']}.html"
     elif output_type == 'subdir':
         return f"{url['loc']}_files"
-    elif output_type == 'image_name':
+    elif output_type == 'file_name':
         name, ext = os.path.splitext(url['full_path'])
         name = replace_symbols(name)
         return f"{url['loc']}{name}{ext}"

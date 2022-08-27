@@ -9,16 +9,17 @@ def test_corrected_downloading(test_url, test_filename,
                                html_content_with_img_link, test_subdir_name):
     with tempfile.TemporaryDirectory() as tmpdir, open(image_path, 'rb') as f:
         requests_mock.get(test_url, text=html_content_with_img_link)
-        requests_mock.get('https://ru.hexlet.io/python.png', content=f.read())
-        requests_mock.get('https://cdn2.hexlet.io/python.png', content=f.read())
+        requests_mock.get('https://ru.hexlet.io/python.png',
+                          content=f.read())
+        requests_mock.get('https://cdn2.hexlet.io/python.png',
+                          content=f.read())
         download(test_url, tmpdir)
         download_image_path = os.path.join(tmpdir,
                                            test_subdir_name,
                                            'ru-hexlet-io-python.png')
         assert os.path.isfile(download_image_path)
-        passed_image_path = os.path.join(tmpdir,
-                                           test_subdir_name,
-                                           'cdn2-hexlet-io-python.png')
+        passed_image_path = os.path.join(
+            tmpdir, test_subdir_name, 'cdn2-hexlet-io-python.png')
         assert not os.path.exists(passed_image_path)
         with open(download_image_path, 'rb') as download_image, \
                 open(image_path, 'rb') as source_image:
