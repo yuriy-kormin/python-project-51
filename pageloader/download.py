@@ -16,19 +16,23 @@ def download(address, path=None):
     return file_path
 
 
-def parse_html(source_address, file_path, subdir_name):
+def parse_html(src_address, file_path, subdir_name):
     result = ''
     with open(file_path, 'r+') as f:
         file_data = f.read()
         soup = BeautifulSoup(file_data, 'html.parser')
-        tags = soup.findAll('img')
-        for tag in tags:
-            if is_same_netloc(source_address, tag['src']):
-                res = download_image(tag['src'], subdir_name)
-                tag['src'] = res
+        process_img_src(soup, src_address, subdir_name)
         f.seek(0)
         f.write(soup.prettify())
     return result
+
+
+def process_img_src(soup, src_address, subdir):
+    tags = soup.findAll('img')
+    for tag in tags:
+        if is_same_netloc(src_address, tag['src']):
+            res = download_image(tag['src'], subdir)
+            tag['src'] = res
 
 
 def is_same_netloc(source_address, img_src):
