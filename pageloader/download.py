@@ -35,9 +35,12 @@ def process_img_src(soup, src_address, subdir):
             tag['src'] = res
 
 
-def is_same_netloc(source_address, img_src):
-    source_url, img_url = map(urlparse, (source_address, img_src))
-    return True
+def is_same_netloc(src_address, obj_href):
+    source_url, img_url = map(url_parse, (src_address, obj_href))
+    # print ('src and url'+ str(source_url['loc'])+str(img_url['loc']))
+    if img_url['loc'] == source_url['loc']:
+        print('downloading....')
+        return True
 
 
 def download_image(address, subdir_name):
