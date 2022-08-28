@@ -71,19 +71,17 @@ def process_other_src(soup, address, subdir):
     for tag_name in ('link', 'script'):
         tags = soup.findAll(tag_name, {'href': True})
         for tag in tags:
-            print(tag['href'])
             full_url = need_to_download(address, tag['href'])
             if full_url:
-                print('downloading...')
                 tag['href'] = download_file(full_url, subdir)
 
 
 def process_img_src(soup, address, subdir):
     tags = soup.findAll('img')
     for tag in tags:
-        url = need_to_download(address, tag['src'])
-        if url:
-            tag['src'] = download_file(url, subdir)
+        full_url = need_to_download(address, tag['src'])
+        if full_url:
+            tag['src'] = download_file(full_url, subdir)
 
 
 def need_to_download(address: str, obj_href: str) -> str:
