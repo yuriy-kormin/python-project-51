@@ -8,6 +8,7 @@ TEST_SUBDIR_NAME = 'ru-hexlet-io_files'
 TEST_RELATIVE_FILENAME = 'ru-hexlet-io-inner.html'
 TEST_CSS_FILENAME = 'ru-hexlet-io-css.css'
 
+
 @pytest.fixture
 def test_url():
     return TEST_URL
@@ -35,7 +36,7 @@ def test_subdir_name():
 
 @pytest.fixture
 def page_with_other_link(fixtures_path):
-    return read_file(os.path.join(fixtures_path,'with_other_link.html'))
+    return read_file(os.path.join(fixtures_path, 'with_other_link.html'))
 
 
 @pytest.fixture
@@ -70,5 +71,3 @@ def read_file(path):
     with open(path, 'r') as f:
         result = f.read()
     return result
-
-

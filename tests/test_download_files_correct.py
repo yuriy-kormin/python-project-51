@@ -28,8 +28,3 @@ def test_corrected_downloading(test_url, test_filename,
             source_image_data = source_image.read()
         assert filetype.is_image(download_image_path)
         assert download_image_data == source_image_data
-
-#
-# def test_other_link(test_url,page_with_other_link,requests_mock,test_subdir_name):
-#     requests_mock.get(test_url, text=page_with_other_link)
-#     requests_mock.get()
