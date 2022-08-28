@@ -23,6 +23,7 @@ def process_other_src(soup, address, subdir):
         for tag in tags:
             full_url = need_to_download(address, tag['href'])
             if full_url:
+                print ('ikk   ',full_url)
                 tag['href'] = download_file(
                     full_url, subdir, render_name(full_url, 'file'))
 
@@ -63,7 +64,10 @@ def render_name(url, output_type):
 
 
 def replace_symbols(data):
-    return re.sub(r'[^\da-zA-Z]', '-', data)
+    # print ('orig is ', data)
+    res = re.sub(r'[^\da-zA-Z]', '-', data)
+    # print (' replace to ', res)
+    return (res)
 
 
 def url_parse(address):
