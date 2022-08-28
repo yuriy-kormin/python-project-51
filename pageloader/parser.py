@@ -64,10 +64,7 @@ def render_name(url, output_type):
 
 
 def replace_symbols(data):
-    # print ('orig is ', data)
-    res = re.sub(r'[^\da-zA-Z]', '-', data)
-    # print (' replace to ', res)
-    return (res)
+    return re.sub(r'[^\da-zA-Z]', '-', data)
 
 
 def url_parse(address):
