@@ -23,7 +23,6 @@ def process_other_src(soup, address, subdir):
         for tag in tags:
             full_url = need_to_download(address, tag['href'])
             if full_url:
-                print ('ikk   ',full_url)
                 tag['href'] = download_file(
                     full_url, subdir, render_name(full_url, 'file'))
 
