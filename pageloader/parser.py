@@ -3,6 +3,23 @@ import os
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 from pageloader.download_childrens import download_files
+from pageloader.logger import get_logger
+
+
+def parse_html(address, file_path, subdir_name):
+    dir_name, _ = os.path.split(file_path)
+    log = get_logger(__name__, os.path.join(dir_name, 'log'))
+    log.debug(f'parsing html {file_path}')
+    result = ''
+
+    with open(file_path, 'r+') as f:
+        file_data = f.read()
+        soup = BeautifulSoup(file_data, 'html.parser')
+        to_download = process_links(soup, address, subdir_name)
+        download_files(to_download)
+        f.seek(0)
+        f.write(soup.prettify())
+    return result
 
 
 def need_to_download(address: str, obj_href: str) -> str:
@@ -29,18 +46,6 @@ def process_links(soup, address, subdir):
                                                 full_url, 'file'))
                 result.append((full_url, local_path))
                 tag[key] = local_path
-    return result
-
-
-def parse_html(address, file_path, subdir_name):
-    result = ''
-    with open(file_path, 'r+') as f:
-        file_data = f.read()
-        soup = BeautifulSoup(file_data, 'html.parser')
-        to_download = process_links(soup, address, subdir_name)
-        download_files(to_download)
-        f.seek(0)
-        f.write(soup.prettify())
     return result
 
 

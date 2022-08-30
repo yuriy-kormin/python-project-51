@@ -24,7 +24,7 @@ LOGGING_CONFIG = {
         },
 
         'file_handler': {
-                'level': 'INFO',
+                'level': 'DEBUG',
                 'class': 'logging.FileHandler',
                 'formatter': 'file_formatter',
                 'filename': 'log',
