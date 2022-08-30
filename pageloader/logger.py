@@ -28,7 +28,7 @@ LOGGING_CONFIG = {
                 'class': 'logging.FileHandler',
                 'formatter': 'file_formatter',
                 'filename': 'log',
-                'mode': 'w'
+                'mode': 'a'
             }
     },
     'loggers': {
@@ -57,6 +57,7 @@ LOGGING_CONFIG = {
 # stream_handler.setLevel(logging.INFO)
 # stream_handler.setFormatter(logging.Formatter(_log_format))
 # return stream_handler
+
 
 def get_logger(name, filename):
     LOGGING_CONFIG['handlers']['file_handler']['filename'] = filename

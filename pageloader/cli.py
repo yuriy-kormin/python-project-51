@@ -7,7 +7,7 @@ def parse_args():
         description='page downloader'
     )
     parser.add_argument(
-        '--output',
+        '-o', '--output',
         type=str,
         help='set destination EXISTING folder',
         default=None

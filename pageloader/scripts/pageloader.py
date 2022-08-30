@@ -5,8 +5,7 @@ from pageloader import download
 
 def main():
     args = parse_args()
-    path = download(args.address, args.output)
-    print(path)
+    download(args.address, args.output)
 
 
 if __name__ == '__main__':

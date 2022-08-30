@@ -15,6 +15,7 @@ def download(address, running_path=None):
     log = get_logger(__name__, os.path.join(PATH, 'log'))
 
     log.info(f'requested url: {address}')
+    log.error('error')
     request = requests.get(address)
     file_path = os.path.join(PATH, render_name(address, 'html'))
     log.info(f'output path:  {PATH}')
