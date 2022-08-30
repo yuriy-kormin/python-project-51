@@ -197,6 +197,14 @@ jsonschema = ">=2.5.1"
 xmltodict = ">=0.11.0"
 
 [[package]]
+name = "progress"
+version = "1.6"
+description = "Easy to use progress bars"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "py"
 version = "1.11.0"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
@@ -357,7 +365,7 @@ python-versions = ">=3.4"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "146345b569f102baf1fac5a8146ec811b924f9018a558e73ce53aee038c73c6e"
+content-hash = "fd42af0e2b95fc07301747231d925dd45533a5fc91c941d0cc97612249990944"
 
 [metadata.files]
 atomicwrites = []
@@ -378,6 +386,7 @@ orderedmultidict = []
 packaging = []
 pluggy = []
 pook = []
+progress = []
 py = []
 pycodestyle = []
 pyflakes = []

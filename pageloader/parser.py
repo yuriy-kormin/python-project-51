@@ -2,7 +2,7 @@ import re
 import os
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
-from pageloader.download_childrens import download_file
+from pageloader.download_childrens import download_files
 
 
 def need_to_download(address: str, obj_href: str) -> str:
@@ -17,23 +17,19 @@ def need_to_download(address: str, obj_href: str) -> str:
     return
 
 
-def process_other_src(soup, address, subdir):
-    for tag_name in ('link', 'script'):
-        tags = soup.findAll(tag_name, {'href': True})
+def process_links(soup, address, subdir):
+    result = []
+    for obj in ('img', 'link', 'script'):
+        key = 'src' if obj == 'img' else 'href'
+        tags = soup.findAll(obj, {key: True})
         for tag in tags:
-            full_url = need_to_download(address, tag['href'])
+            full_url = need_to_download(address, tag[key])
             if full_url:
-                tag['href'] = download_file(
-                    full_url, subdir, render_name(full_url, 'file'))
-
-
-def process_img_src(soup, address, subdir):
-    tags = soup.findAll('img')
-    for tag in tags:
-        full_url = need_to_download(address, tag['src'])
-        if full_url:
-            tag['src'] = download_file(
-                full_url, subdir, render_name(full_url, 'file'))
+                local_path = os.path.join(subdir, render_name(
+                                                full_url, 'file'))
+                result.append((full_url, local_path))
+                tag[key] = local_path
+    return result
 
 
 def parse_html(address, file_path, subdir_name):
@@ -41,8 +37,8 @@ def parse_html(address, file_path, subdir_name):
     with open(file_path, 'r+') as f:
         file_data = f.read()
         soup = BeautifulSoup(file_data, 'html.parser')
-        process_img_src(soup, address, subdir_name)
-        process_other_src(soup, address, subdir_name)
+        to_download = process_links(soup, address, subdir_name)
+        download_files(to_download)
         f.seek(0)
         f.write(soup.prettify())
     return result
