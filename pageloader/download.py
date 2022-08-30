@@ -9,13 +9,11 @@ PATH = os.getcwd()
 
 def download(address, running_path=None):
     global PATH, log
-
     if running_path:
         PATH = running_path
     log = get_logger(__name__, os.path.join(PATH, 'log'))
 
     log.info(f'requested url: {address}')
-    log.error('error')
     request = requests.get(address)
     file_path = os.path.join(PATH, render_name(address, 'html'))
     log.info(f'output path:  {PATH}')
@@ -29,9 +27,7 @@ def download(address, running_path=None):
 def make_subdir(address, path):
     name = render_name(address, 'subdir')
     subdir_path = os.path.join(path, name)
-    # try:
     os.makedirs(subdir_path, exist_ok=True)
-    # except:
 
     return subdir_path
 
