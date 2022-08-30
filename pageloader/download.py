@@ -1,20 +1,20 @@
 import os
 import requests
 from pageloader.parser import parse_html, render_name
-from pageloader.logger import logger
+from pageloader.logger import get_logger
+log = get_logger(__name__)
 
 
 def download(address, path=None):
     if path is None:
         path = os.getcwd()
-    log = logger(os.path.join(path, 'log'))
-    log.debug(f'Try to download {address}')
+    log.info(f'Try to download {address}')
     request = requests.get(address)
     file_path = os.path.join(path, render_name(address, 'html'))
-    log.debug(f'saving to file  {file_path}')
+    log.info(f'saving to file  {file_path}')
     save_to_file(request.text, file_path)
     subdir_name = make_subdir(address, path)
-    log.debug(f'making subdir   {subdir_name}')
+    log.info(f'making subdir   {subdir_name}')
     parse_html(address, file_path, subdir_name)
     return file_path
 
