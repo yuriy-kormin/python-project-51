@@ -1,42 +1,74 @@
 import logging
+import logging.config
+from getpass import getuser
+LOGGING_CONFIG = {
+    'version': 1,
+    'disable_existing_loggers': True,
 
-_log_format = "%(asctime)s - [%(levelname)s] - %(name)s - %(message)s"
+    'formatters': {
+        'file_formatter': {
+            'format': '%(asctime)s - [%(levelname)s] %(name)s - %(message)s'
+        },
+        'console_formatter': {
+            'format': '%(levelname)s:%(username)s:%(message)s'
+        }
 
+    },
 
-def get_file_handler(filename):
-    file_handler = logging.FileHandler(filename)
-    file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(logging.Formatter(_log_format))
-    return file_handler
+    'handlers': {
+        "console": {
+            "level": 'INFO',
+            "class": "logging.StreamHandler",
+            'formatter': 'console_formatter',
+            "stream": "ext://sys.stdout"
+        },
 
+        'file_handler': {
+                'level': 'INFO',
+                'class': 'logging.FileHandler',
+                'formatter': 'file_formatter',
+                'filename': 'log',
+                'mode': 'w'
+            }
+    },
+    'loggers': {
+        __name__: {
+            'handlers': ['file_handler', 'console'],
+            'level': 'INFO',
+            'propagate': True
+        }
+    }
+}
 
-def get_stream_handler():
-    stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(logging.INFO)
-    stream_handler.setFormatter(logging.Formatter(_log_format))
-    return stream_handler
+#
+#
+# _log_format = "%(asctime)s - [%(levelname)s] - %(name)s - %(message)s"
 
+#
+# def get_file_handler(filename):
+# file_handler = logging.FileHandler(filename)
+# file_handler.setLevel(logging.INFO)
+# file_handler.setFormatter(logging.Formatter(_log_format))
+# return file_handler
+#
+
+# def get_stream_handler():
+# stream_handler = logging.StreamHandler()
+# stream_handler.setLevel(logging.INFO)
+# stream_handler.setFormatter(logging.Formatter(_log_format))
+# return stream_handler
 
 def get_logger(name, filename):
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
-    logger.addHandler(get_file_handler(filename))
-    logger.addHandler(get_stream_handler())
+    LOGGING_CONFIG['handlers']['file_handler']['filename'] = filename
+    logging.config.dictConfig(LOGGING_CONFIG)
+    logger = logging.LoggerAdapter(
+        logging.getLogger(__name__),
+        {"username": getuser()}
+    )
     return logger
 
 # import logging.config
 # import sys
-#
-#
-# LOGGING_CONFIG = {
-#     'version': 1,
-#     'disable_existing_loggers': True,
-#
-#     'formatters': {
-#         'default_formatter': {
-#             'format': '[%(levelname)s:%(asctime)s] %(message)s'
-#         },
-#     },
 #
 #     'handlers': {
 #         'file_handler': {
@@ -49,18 +81,10 @@ def get_logger(name, filename):
 #         },
 #     },
 #
-#     'loggers': {
-#         'logger': {
-#             'handlers': ['file_handler'],
-#             'level': 'DEBUG'
-#             # 'propagate': True
-#         }
-#     }
 # }
 #
 # #
 # # def log():
-# #     log.config.dictConfig(LOGGING_CONFIG)
 # #     logger = log.getLogger('my_logger')
 # #     # logger.debug('debug log')
 # #     return logger

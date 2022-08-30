@@ -14,13 +14,13 @@ def download(address, running_path=None):
         PATH = running_path
     log = get_logger(__name__, os.path.join(PATH, 'log'))
 
-    log.info(f'Try to download {address}')
+    log.info(f'requested url: {address}')
     request = requests.get(address)
     file_path = os.path.join(PATH, render_name(address, 'html'))
-    log.info(f'saving to file  {file_path}')
+    log.info(f'output path:  {PATH}')
+    log.info(f'write html file:  {file_path}')
     save_to_file(request.text, file_path)
     subdir_name = make_subdir(address, PATH)
-    log.info(f'making subdir   {subdir_name}')
     parse_html(address, file_path, subdir_name)
     return file_path
 
