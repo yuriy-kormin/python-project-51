@@ -4,7 +4,7 @@ import os
 FIXTURES_PATH = 'fixtures'
 TEST_URL = 'https://ru.hexlet.io/courses'
 TEST_FILENAME = 'ru-hexlet-io-courses.html'
-TEST_SUBDIR_NAME = 'ru-hexlet-io_files'
+TEST_SUBDIR_NAME = 'ru-hexlet-io-courses_files'
 TEST_RELATIVE_FILENAME = 'ru-hexlet-io-inner.html'
 TEST_CSS_FILENAME = 'ru-hexlet-io-css.css'
 

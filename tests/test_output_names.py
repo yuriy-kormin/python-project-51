@@ -4,10 +4,12 @@ from pageloader import download
 from urllib.parse import urljoin
 
 
-def test_name_html_file(test_url, test_filename,
+def test_name_html_file(test_url, test_filename, page_with_other_link,
                         test_subdir_name, requests_mock):
     test_url_ext = f'{test_url}.mht'
-    requests_mock.get(test_url_ext)
+    requests_mock.get(test_url_ext, text=page_with_other_link)
+    requests_mock.get(urljoin(test_url, 'inner'), text=page_with_other_link)
+    requests_mock.get(urljoin(test_url, 'css.css'), text=page_with_other_link)
     with tempfile.TemporaryDirectory() as tmpdir:
         test_file = os.path.join(tmpdir, test_filename)
         assert download(test_url_ext, tmpdir) == test_file
