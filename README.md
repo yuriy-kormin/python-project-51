@@ -10,3 +10,9 @@ Its a CLI utility to download resources from remote host locally
 page-loader [--output OUTPUT] address
 
 [![asciicast](https://asciinema.org/a/516540.svg)](https://asciinema.org/a/516540)
+
+### USAGE EXAMPLES
+#### Download page with local image links
+[![asciicast](https://asciinema.org/a/518396.svg)](https://asciinema.org/a/518396)
+#### Download local pages with "script" and "link" links
+[![asciicast](https://asciinema.org/a/518417.svg)](https://asciinema.org/a/518417)
