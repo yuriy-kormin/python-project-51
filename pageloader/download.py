@@ -4,7 +4,7 @@ from pageloader.parser import parse_html
 from pageloader.content_actions import render_name
 from pageloader.logger import get_logger
 
-log = None
+log = get_logger(__name__)
 PATH = os.getcwd()
 
 
@@ -12,7 +12,6 @@ def download(url, running_path=None):
     global PATH, log
     if running_path:
         PATH = running_path
-    log = get_logger(__name__, os.path.join(PATH, 'log'))
     log.info(f'requested url: {url}')
     request = requests.get(url)
     file_path = os.path.join(PATH, render_name(url, 'html'))
@@ -24,5 +23,10 @@ def download(url, running_path=None):
 
 
 def save_to_file(data, path):
-    with open(path, 'w') as f:
-        f.write(data)
+    try:
+        log.debug(f'trying to save file by path: {path}')
+        with open(path, 'w') as f:
+            f.write(data)
+    except Exception as e:
+        log.warning(f'cannot write file, error:\n{e}')
+        raise SystemExit()
