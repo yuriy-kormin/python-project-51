@@ -2,6 +2,7 @@ from urllib.parse import urlparse
 import re
 import os
 import requests
+import logging
 # from progress.bar import Bar
 
 
@@ -10,14 +11,21 @@ def download_files(urls):
     for url, path in urls:
         # bar.next()
         request = requests.get(url, stream=True)
-        with open(path, 'wb') as f:
-            f.write(request.content)
+        try:
+            with open(path, 'wb') as f:
+                logging.DEBUG(f'try to save {path}')
+                f.write(request.content)
+        except Exception:
+            logging.exception('cannot write file', exc_info=True)
 
 
 def make_subdir(url, path):
     name = render_name(url, 'subdir')
     subdir_path = os.path.join(path, name)
-    os.makedirs(subdir_path, exist_ok=True)
+    try:
+        os.makedirs(subdir_path, exist_ok=True)
+    except Exception:
+        logging.exception('cannot make subdir', exc_info=True)
     return subdir_path
 
 
