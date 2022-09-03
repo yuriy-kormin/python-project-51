@@ -16,3 +16,5 @@ page-loader [--output OUTPUT] address
 [![asciicast](https://asciinema.org/a/518396.svg)](https://asciinema.org/a/518396)
 #### Download local pages with "script" and "link" links
 [![asciicast](https://asciinema.org/a/518417.svg)](https://asciinema.org/a/518417)
+#### Installation example, usage and log file messages
+[![asciicast](https://asciinema.org/a/518655.svg)](https://asciinema.org/a/518655)
