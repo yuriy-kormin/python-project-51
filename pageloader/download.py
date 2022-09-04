@@ -19,6 +19,7 @@ def download(url, output=None):
     elif not os.access(work_dir, os.W_OK):
         raise PermissionError(errno.EACCES)
     request = requests.get(url)
+    request.raise_for_status()
     logging.info(f'write html file:  {file_path}')
     save_to_file(request.text, file_path)
     parse_page(url, file_path)
