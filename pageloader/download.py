@@ -2,13 +2,13 @@ import os
 import requests
 from pageloader.parser import parse_page
 from pageloader.content_actions import render_name
-from pageloader.logger import set_log_path
+from pageloader.logger import setup_logger
 import logging
 
 
 def download(url, workdir_path=None):
     work_dir = workdir_path if workdir_path else os.getcwd()
-    set_log_path(work_dir)
+    setup_logger()
     logging.info(f'requested url: {url}')
     request = requests.get(url)
     file_path = os.path.join(work_dir, render_name(url, 'html'))
