@@ -13,4 +13,3 @@ def setup_logger():
     stdout_handler.setLevel(logging.INFO)
     logging.getLogger('').addHandler(stdout_handler)
     logging.getLogger('').addHandler(stderr_handler)
-
