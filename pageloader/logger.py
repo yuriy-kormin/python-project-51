@@ -5,7 +5,7 @@ LOGNAME = 'page_loader.log'
 
 def set_log_path(path):
     log_path = os.path.join(path, LOGNAME)
-    logging.basicConfig(filename=log_path, filemode='a',
+    logging.basicConfig(filename=LOGNAME, filemode='a',
                         encoding='utf-8', level=logging.DEBUG)
     console = logging.StreamHandler()
     console.setLevel(logging.INFO)
