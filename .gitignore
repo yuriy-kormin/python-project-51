@@ -32,3 +32,4 @@ poetry/core/*
 /coverage.xml
 ru-hexlet-io-courses*
 /test.log
+/page_loader.log
