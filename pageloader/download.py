@@ -1,6 +1,5 @@
 import os
-import sys
-
+import errno
 import requests
 from pageloader.parser import parse_page
 from pageloader.content_actions import render_name
@@ -15,8 +14,10 @@ def download(url, output=None):
     file_path = os.path.join(work_dir, render_name(url, 'html'))
     logging.info(f'output path:  {work_dir}')
     if not os.path.exists(work_dir):
-        logging.error('output path does not exists')
-        sys.exit(0)
+        raise FileNotFoundError(
+            errno.ENOENT, os.strerror(errno.ENOENT))
+    elif not os.access(work_dir, os.W_OK):
+        raise PermissionError(errno.EACCES)
     request = requests.get(url)
     logging.info(f'write html file:  {file_path}')
     save_to_file(request.text, file_path)
