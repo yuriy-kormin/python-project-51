@@ -10,16 +10,16 @@ def process_links(soup, url, dir_name):
     subdir_created = False
     for obj in ('img', 'link', 'script'):
         key = 'src' if obj == 'img' else 'href'
-        logging.DEBUG(f'______\nprocess tag {obj}')
+        logging.debug(f'______\nprocess tag {obj}')
         tags = soup.findAll(obj, {key: True})
         for tag in tags:
-            logging.DEBUG(f'processing {tag[key]}')
+            logging.debug(f'processing {tag[key]}')
             obj_url = need_to_download(url, tag[key])
             if obj_url:
-                logging.DEBUG(f'{tag[key]} need to download')
+                logging.debug(f'{tag[key]} need to download')
                 if not subdir_created:
                     subdir_created = True
-                    logging.DEBUG(f'making subdir {dir_name}')
+                    logging.debug(f'making subdir {dir_name}')
                     subdir_path = make_subdir(url, dir_name)
                 file_name = render_name(obj_url, 'file')
                 local_path = os.path.join(subdir_path, file_name)

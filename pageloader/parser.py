@@ -8,12 +8,11 @@ def parse_page(url, file_path):
     dir_name, _ = os.path.split(file_path)
     logging.debug(f'parsing html {file_path}')
     try:
-        logging.debug(f'Try to open {file_path} for parse')
         with open(file_path, 'r+') as f:
             file_data = f.read()
             logging.debug('file successfully read, processing to BS4')
             soup = BeautifulSoup(file_data, 'html.parser')
-            logging.debug('file successfully read, processing to BS4')
+            logging.debug('file successfully parsed be BS4')
             process_links(soup, url, dir_name)
             f.seek(0)
             try:

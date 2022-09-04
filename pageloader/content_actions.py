@@ -13,7 +13,7 @@ def download_files(urls):
         request = requests.get(url, stream=True)
         try:
             with open(path, 'wb') as f:
-                logging.DEBUG(f'try to save {path}')
+                logging.debug(f'try to save {path}')
                 f.write(request.content)
         except Exception:
             logging.exception('cannot write file', exc_info=True)
