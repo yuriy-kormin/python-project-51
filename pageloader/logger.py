@@ -5,7 +5,8 @@ LOGNAME = 'page_loader.log'
 
 def setup_logger():
     logging.basicConfig(filename=LOGNAME, filemode='a',
-                        encoding='utf-8', level=logging.DEBUG)
+                        encoding='utf-8', level=logging.DEBUG,
+                        format='%(asctime)s | %(levelname)s | %(message)s')
     stdout_handler = logging.StreamHandler(stream=sys.stdout)
     stdout_handler.setLevel(logging.INFO)
     stderr_handler = logging.StreamHandler(stream=sys.stderr)
