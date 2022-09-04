@@ -16,7 +16,7 @@ def process_links(soup, url, dir_name):
             logging.debug(f'processing {tag[key]}')
             obj_url = need_to_download(url, tag[key])
             if obj_url:
-                logging.debug(f'{tag[key]} need to download')
+                logging.debug(f' - need to download {tag[key]}')
                 if not subdir_created:
                     subdir_created = True
                     logging.debug(f'making subdir {dir_name}')
