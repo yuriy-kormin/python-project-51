@@ -7,17 +7,16 @@ from progress.bar import Bar
 
 
 def download_files(urls):
-    # with Bar('Downloading', max=len(urls), suffix='%(percent)d%%') as bar:
-    for url, path in urls:
-        # bar.next()
-        request = requests.get(url, stream=True)
-        try:
-            with open(path, 'wb') as f:
-                logging.debug(f'try to save {path}')
-                f.write(request.content)
-        except Exception:
-            logging.exception('cannot write file', exc_info=True)
-
+    with Bar('Downloading', max=len(urls), suffix='%(percent)d%%') as bar:
+        for url, path in urls:
+            bar.next()
+            request = requests.get(url, stream=True)
+            try:
+                with open(path, 'wb') as f:
+                    logging.debug(f'try to save {path}')
+                    f.write(request.content)
+            except Exception:
+                logging.exception('cannot write file', exc_info=True)
 
 def make_subdir(url, path):
     name = render_name(url, 'subdir')
