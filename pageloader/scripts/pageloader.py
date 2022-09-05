@@ -13,14 +13,14 @@ def main():
         logging.error('Specified path does not exists')
     except PermissionError:
         logging.error('Specified path write permission denied')
-    except requests.URLRequired:
+    except requests.exceptions.URLRequired:
         logging.error('Invalid URL address')
-    except requests.ConnectionError:
+    except requests.exceptions.ConnectionError:
         logging.error(
             'Cannot connect to specified URL. Probably, some network problem')
-    except requests.TooManyRedirects:
+    except requests.exceptions.TooManyRedirects:
         logging.error('Too many redirects on address')
-    except requests.Timeout:
+    except requests.exceptions.Timeout:
         logging.error(
             'Request timed out while trying to connect to the remote server.')
 
