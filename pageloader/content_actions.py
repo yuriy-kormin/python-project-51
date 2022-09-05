@@ -17,6 +17,8 @@ def download_files(urls):
                     f.write(request.content)
             except Exception:
                 logging.exception('cannot write file', exc_info=True)
+    return True
+
 
 def make_subdir(url, path):
     name = render_name(url, 'subdir')

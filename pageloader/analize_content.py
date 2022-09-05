@@ -25,7 +25,9 @@ def process_links(soup, url, dir_name):
                 local_path = os.path.join(subdir_path, file_name)
                 links.append((obj_url, local_path))
                 tag[key] = local_path
-    download_files(links)
+    if download_files(links):
+        return True
+    return
 
 
 def need_to_download(url: str, obj_href: str) -> str:
