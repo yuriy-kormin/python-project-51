@@ -3,7 +3,7 @@ import re
 import os
 import requests
 import logging
-# from progress.bar import Bar
+from progress.bar import Bar
 
 
 def download_files(urls):
