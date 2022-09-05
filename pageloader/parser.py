@@ -21,6 +21,8 @@ def parse_page(url, file_path):
             except Exception:
                 logging.exception('Cannot write file after processing links.',
                                   exc_info=True)
+            logging.info(f"Page was succesfully downloaded as '{file_path}'")
+
     except Exception:
         logging.exception(f'Cannot open file {file_path} for parsing',
                           exc_info=True)

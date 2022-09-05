@@ -11,7 +11,8 @@ def setup_logger():
     stdout_handler.setLevel(logging.INFO)
     stderr_handler = logging.StreamHandler(stream=sys.stderr)
     stderr_handler.setLevel(logging.ERROR)
-    stderr_handler.addFilter(lambda param: 1 if param.levelno < logging.ERROR else 0)
+    stderr_handler.addFilter(
+        lambda param: 1 if param.levelno < logging.ERROR else 0)
     stdout_handler.setLevel(logging.INFO)
     logging.getLogger('').addHandler(stdout_handler)
     logging.getLogger('').addHandler(stderr_handler)
