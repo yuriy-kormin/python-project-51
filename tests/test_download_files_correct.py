@@ -1,6 +1,6 @@
 import os
 import tempfile
-from pageloader import download
+from page_loader import download
 import filetype
 
 

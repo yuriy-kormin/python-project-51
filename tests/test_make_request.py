@@ -1,5 +1,5 @@
 import tempfile
-from pageloader import download
+from page_loader import download
 
 
 def test_request(test_url, test_filename, requests_mock):

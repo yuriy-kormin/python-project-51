@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import requests
-from pageloader.cli import parse_args
-from pageloader import download
+from page_loader.cli import parse_args
+from page_loader import download
 import logging
 
 

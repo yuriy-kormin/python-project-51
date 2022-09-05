@@ -1,6 +1,6 @@
 import os
 from bs4 import BeautifulSoup
-from pageloader.analize_content import process_links
+from page_loader.analize_content import process_links
 import logging
 
 

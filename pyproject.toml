@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "terminal utility to download html pages from assigned address"
 authors = ["Yuriy Kormin <yuriy.kormin@gmail.com>"]
 packages = [
-  { include = "pageloader" },
+  { include = "page_loader" },
 ]
 
 [tool.poetry.dependencies]
@@ -28,7 +28,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-page-loader = "pageloader.scripts.pageloader:main"
+page-loader = "page_loader.scripts.pageloader:main"
 
 [tool.pytest.ini_options]
 pythonpath = [

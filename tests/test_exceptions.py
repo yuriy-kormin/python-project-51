@@ -1,5 +1,5 @@
 import os
-from pageloader import download
+from page_loader import download
 import tempfile
 import pytest
 import requests

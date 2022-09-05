@@ -1,6 +1,6 @@
 from urllib.parse import urljoin
 import os
-from pageloader.content_actions import download_files, make_subdir, \
+from page_loader.content_actions import download_files, make_subdir, \
     render_name, url_parse
 import logging
 

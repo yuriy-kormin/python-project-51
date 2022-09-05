@@ -1,6 +1,6 @@
 import tempfile
 from urllib.parse import urljoin
-from pageloader import download
+from page_loader import download
 import os
 
 

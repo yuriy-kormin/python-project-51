@@ -1,9 +1,9 @@
 import os
 import errno
 import requests
-from pageloader.parser import parse_page
-from pageloader.content_actions import render_name
-from pageloader.logger import setup_logger
+from page_loader.parser import parse_page
+from page_loader.content_actions import render_name
+from page_loader.logger import setup_logger
 import logging
 
 
