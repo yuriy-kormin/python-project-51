@@ -33,4 +33,4 @@ def save_to_file(data, path):
             f.write(data)
     except Exception:
         logging.exception('cannot write file', exc_info=True)
-        raise SystemExit()
+        raise NotADirectoryError
