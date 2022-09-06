@@ -25,6 +25,7 @@ def process_soup(soup, url, work_dir):
     links_to_download = []
     subdir_name = render_name(url, 'subdir')
     subdir = os.path.join(work_dir, subdir_name)
+    logging.debug('------ analyzing page data ------')
     for obj in ('img', 'link', 'script'):
         key = 'src' if obj == 'img' else 'href'
         logging.debug(f'* process <{obj}> tag *')
@@ -33,13 +34,13 @@ def process_soup(soup, url, work_dir):
             logging.debug(f'processing {tag[key]}')
             obj_url = need_to_download(url, tag[key])
             if obj_url:
-                logging.debug(f' + download {obj_url}')
+                logging.debug(' +')
                 file_name = render_name(obj_url, 'file')
                 local_path = os.path.join(subdir, file_name)
                 links_to_download.append((obj_url, local_path))
                 tag[key] = local_path
             else:
-                logging.debug(' - passing')
+                logging.debug(' -')
         if not len(tags):
             logging.debug(' - nothing to process -')
     return links_to_download

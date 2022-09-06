@@ -12,6 +12,7 @@ def download_files(url, work_dir, links_to_download):
              suffix='%(percent)d%%') as bar:
         if links_to_download:
             make_subdir(url, work_dir)
+            logging.debug('------ downloading content ------')
             for url, path in links_to_download:
                 bar.next()
                 logging.debug(f'process url: {url}')
@@ -75,9 +76,11 @@ def save_to_file(data, path):
         mode = 'w'
         logging.info(f'write html file:  {path}')
     try:
-        logging.debug(f'trying to save file by path: {path}')
+        logging.debug(f"trying to save file: '{path}'")
         with open(path, mode) as f:
             f.write(data)
     except OSError:
         logging.exception('cannot write file', exc_info=True)
         raise
+    logging.debug('saving file successfully')
+    logging.debug(' ')
