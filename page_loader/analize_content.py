@@ -28,15 +28,16 @@ def process_links(soup, url, dir_name):
             else:
                 logging.debug(f' - pass {tag[key]}')
             if not len(tags):
-                logging.debug(f' ---- nothing to process ----')
+                logging.debug(' ---- nothing to process ----')
     if download_files(links):
         return True
     return
 
 
 def need_to_download(url: str, obj_href: str) -> str:
-    ''' Check that address and  href on the same domain name and
-    must be downloaded. return link to download file or None '''
+    """ Check that address and  href on the same domain name and
+    must be downloaded. return link to download file or None if
+    file will not be downloaded"""
     source_url, obj_url = map(url_parse, (url, obj_href))
     if not obj_url['loc']:
         return urljoin(url, obj_href)

@@ -12,17 +12,13 @@ def parse_page(url, file_path):
             file_data = f.read()
             logging.debug('file successfully read, processing to BS4')
             soup = BeautifulSoup(file_data, 'html.parser')
-            logging.debug('file successfully parsed be BS4')
+            logging.debug('file successfully parsed by BS4')
             process_links(soup, url, dir_name)
             f.seek(0)
-            try:
-                logging.debug('try to write html after processing links')
-                f.write(soup.prettify())
-            except Exception:
-                logging.exception('Cannot write file after processing links.',
-                                  exc_info=True)
-            logging.info(f"Page was succesfully downloaded as '{file_path}'")
-
-    except Exception:
-        logging.exception(f'Cannot open file {file_path} for parsing',
+            logging.debug('try to write html after processing links')
+            f.write(soup.prettify())
+            logging.info(f"Page was successfully downloaded as '{file_path}'")
+    except (FileNotFoundError, PermissionError):
+        logging.exception(f'Cannot parse file {file_path}',
                           exc_info=True)
+        raise

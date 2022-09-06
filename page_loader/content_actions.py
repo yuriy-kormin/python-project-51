@@ -1,22 +1,26 @@
-from urllib.parse import urlparse
-import re
 import os
 import requests
 import logging
+from urllib.parse import urlparse
 from progress.bar import Bar
+import re
 
 
 def download_files(urls):
     with Bar('Downloading', max=len(urls), suffix='%(percent)d%%') as bar:
         for url, path in urls:
             bar.next()
-            request = requests.get(url, stream=True)
             try:
+                request = requests.get(url, stream=True)
                 with open(path, 'wb') as f:
                     logging.debug(f'try to save {path}')
                     f.write(request.content)
-            except Exception:
+            except OSError:
                 logging.exception('cannot write file', exc_info=True)
+                raise
+            except requests.exceptions:
+                logging.exception(f'cannot download {url}')
+                raise
     return True
 
 
@@ -25,9 +29,11 @@ def make_subdir(url, path):
     subdir_path = os.path.join(path, name)
     try:
         os.makedirs(subdir_path, exist_ok=True)
-    except Exception:
+    except OSError:
         logging.exception('cannot make subdir', exc_info=True)
-    return subdir_path
+        raise
+    else:
+        return subdir_path
 
 
 def replace_symbols(data):
