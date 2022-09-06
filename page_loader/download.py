@@ -1,7 +1,7 @@
 import os
-import requests
-from page_loader.parser import parse_page
-from page_loader.content_actions import render_name
+from page_loader.analize_content import parse_page, process_soup
+from page_loader.content_actions import render_name, save_to_file, \
+    make_request, download_files
 from page_loader.logger import setup_logger
 import logging
 
@@ -10,21 +10,29 @@ def download(url, output=None):
     work_dir = output if output else os.getcwd()
     setup_logger()
     logging.info(f'requested url: {url}')
-    file_path = os.path.join(work_dir, render_name(url, 'html'))
     logging.info(f'output path:  {work_dir}')
-    request = requests.get(url)
-    request.raise_for_status()
-    logging.info(f'write html file:  {file_path}')
+    return process_main_page(url, work_dir)
+
+
+def process_main_page(url, work_dir):
+    file = download_main_page(url, work_dir)
+    updated_html_data = process_content(url, file)
+    logging.debug('try to write html after processing links')
+    save_to_file(updated_html_data, file)
+    logging.info(f"Page was successfully downloaded as '{file}'")
+    return file
+
+
+def download_main_page(url, work_dir):
+    file_path = os.path.join(work_dir, render_name(url, 'html'))
+    request = make_request(url)
     save_to_file(request.text, file_path)
-    parse_page(url, file_path)
     return file_path
 
 
-def save_to_file(data, path):
-    try:
-        logging.debug(f'trying to save file by path: {path}')
-        with open(path, 'w') as f:
-            f.write(data)
-    except OSError:
-        logging.exception('cannot write file', exc_info=True)
-        raise
+def process_content(url, file_name):
+    work_dir, _ = os.path.split(file_name)
+    soup = parse_page(file_name)
+    links_to_download = process_soup(soup, url, work_dir)
+    download_files(url, work_dir, links_to_download)
+    return soup.prettify()
