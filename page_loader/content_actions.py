@@ -24,16 +24,12 @@ def download_files(urls):
     return True
 
 
-def make_subdir(url, path):
-    name = render_name(url, 'subdir')
-    subdir_path = os.path.join(path, name)
+def make_subdir(path):
     try:
-        os.makedirs(subdir_path, exist_ok=True)
+        os.makedirs(path, exist_ok=True)
     except OSError:
         logging.exception('cannot make subdir', exc_info=True)
         raise
-    else:
-        return subdir_path
 
 
 def replace_symbols(data):
