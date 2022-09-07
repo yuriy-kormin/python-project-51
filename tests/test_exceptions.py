@@ -7,8 +7,10 @@ import requests_mock
 
 
 def test_isset_output_dir(test_url):
-    with pytest.raises(FileNotFoundError):
-        download(test_url, 'test_path')
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = os.path.join(tmpdir, 'test_dir')
+        with pytest.raises(FileNotFoundError):
+            download(test_url, path)
 
 
 def test_permissons(test_url):

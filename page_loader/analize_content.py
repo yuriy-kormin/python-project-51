@@ -1,24 +1,20 @@
 from urllib.parse import urljoin
 import os
 from bs4 import BeautifulSoup
-from page_loader.content_actions import render_name, url_parse
+from page_loader.content_actions import render_name, \
+    url_parse, make_request, download_files, save_to_file
 import logging
 
 
-def parse_page(file_path):
-    workdir_name, _ = os.path.split(file_path)
-    logging.debug(f'parsing html {file_path}')
-    try:
-        with open(file_path, 'r') as f:
-            file_data = f.read()
-        logging.debug('file successfully read, processing to BS4')
-        soup = BeautifulSoup(file_data, 'html.parser')
-        logging.debug('file successfully parsed by BS4')
-    except (FileNotFoundError, PermissionError):
-        logging.exception(f'Cannot parse file {file_path}',
-                          exc_info=True)
-        raise
-    return soup
+def process_main_page(url, work_dir):
+    page_data = make_request(url).text
+    file_path = os.path.join(work_dir, render_name(url, 'html'))
+    soup = BeautifulSoup(page_data, 'html.parser')
+    links_to_download = process_soup(soup, url, work_dir)
+    download_files(url, work_dir, links_to_download)
+    save_to_file(soup.prettify(), file_path, mode='w')
+    logging.info(f"Page was successfully downloaded as '{file_path}'")
+    return file_path
 
 
 def process_soup(soup, url, work_dir):
