@@ -33,3 +33,4 @@ poetry/core/*
 ru-hexlet-io-courses*
 /test.log
 /page_loader.log
+/web_root/
