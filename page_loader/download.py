@@ -18,7 +18,7 @@ def process_main_page(url, work_dir):
     file = download_main_page(url, work_dir)
     updated_html_data = process_content(url, file)
     logging.debug('try to write html after processing links')
-    save_to_file(updated_html_data, file)
+    save_to_file(updated_html_data, file, mode='w')
     logging.info(f"Page was successfully downloaded as '{file}'")
     return file
 
@@ -26,7 +26,7 @@ def process_main_page(url, work_dir):
 def download_main_page(url, work_dir):
     file_path = os.path.join(work_dir, render_name(url, 'html'))
     request = make_request(url)
-    save_to_file(request.text, file_path)
+    save_to_file(request.text, file_path, mode='w')
     return file_path
 
 

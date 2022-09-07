@@ -31,16 +31,15 @@ def process_soup(soup, url, work_dir):
         logging.debug(f'* process <{obj}> tag *')
         tags = soup.findAll(obj, {key: True})
         for tag in tags:
-            logging.debug(f'processing {tag[key]}')
             obj_url = need_to_download(url, tag[key])
             if obj_url:
-                logging.debug(' +')
+                logging.debug(f' + {tag[key]}')
                 file_name = render_name(obj_url, 'file')
                 local_path = os.path.join(subdir, file_name)
                 links_to_download.append((obj_url, local_path))
                 tag[key] = local_path
             else:
-                logging.debug(' -')
+                logging.debug(f' - {tag[key]}')
         if not len(tags):
             logging.debug(' - nothing to process -')
     return links_to_download

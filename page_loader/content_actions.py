@@ -46,7 +46,7 @@ def render_name(url, output_type):
         name, ext = os.path.splitext(url_data['full_path'])
         name = replace_symbols(name)
         if not ext:
-            ext = '.htm'
+            ext = '.html'
         return f"{url_data['loc']}{name}{ext}"
 
 
@@ -69,11 +69,9 @@ def make_request(url):
     return request
 
 
-def save_to_file(data, path):
+def save_to_file(data, path, mode='wb'):
     _, ext = os.path.splitext(path)
-    mode = 'wb'
-    if ext == '.html':
-        mode = 'w'
+    if mode != 'wb':
         logging.info(f'write html file:  {path}')
     try:
         logging.debug(f"trying to save file: '{path}'")
