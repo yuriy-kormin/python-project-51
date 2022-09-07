@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from page_loader.content_actions import render_name, \
     url_parse, make_request, download_files, save_to_file
 import logging
+import re
 
 
 def process_main_page(url, work_dir):
@@ -48,7 +49,7 @@ def need_to_download(url: str, obj_href: str) -> str:
     source_url, obj_url = map(url_parse, (url, obj_href))
     if not obj_url['loc']:
         return urljoin(url, obj_href)
-    _, ext = os.path.splitext(obj_url['full_path'])
-    if obj_url['loc'] == source_url['loc']:
+    elif obj_url['loc'] == source_url['loc'] or \
+            re.match(rf"^\w*\.{source_url['loc']}$", obj_url['loc']):
         return obj_href
     return
