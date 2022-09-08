@@ -17,7 +17,8 @@ def download_files(url, work_dir, links_to_download):
                 bar.next()
                 logging.debug(f'process url: {url}')
                 request = make_request(url)
-                save_to_file(request.content, path)
+                if request.ok:
+                    save_to_file(request.content, path)
 
 
 def make_subdir(url, work_dir):
