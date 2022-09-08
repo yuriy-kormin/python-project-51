@@ -31,6 +31,8 @@ build-backend = "poetry.core.masonry.api"
 page-loader = "page_loader.scripts.pageloader:main"
 
 [tool.pytest.ini_options]
+log_cli = 1
+log_cli_level = "DEBUG"
 pythonpath = [
   "."
 ]
