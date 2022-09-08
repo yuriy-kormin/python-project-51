@@ -28,3 +28,17 @@ def test_corrected_downloading(test_url, test_filename,
             source_image_data = source_image.read()
         assert filetype.is_image(download_image_path)
         assert download_image_data == source_image_data
+
+
+def test_subdomain_link(test_url, requests_mock,
+                        page_with_subdomain_image_link, image_path):
+    with tempfile.TemporaryDirectory() as tmpdir, open(image_path, 'rb') as f:
+        image_data = f.read()
+        requests_mock.get(test_url, text=page_with_subdomain_image_link)
+        requests_mock.get('https://ru.hexlet.io/python.png',
+                          content=image_data)
+        requests_mock.get('https://cdn2.ru.hexlet.io/python.png',
+                          content=image_data)
+        download(test_url, tmpdir)
+        subdir_path = os.path.join(tmpdir, 'ru-hexlet-io-courses_files')
+        assert len(os.listdir(subdir_path)) == 2

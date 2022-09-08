@@ -40,6 +40,12 @@ def page_with_other_link(fixtures_path):
 
 
 @pytest.fixture
+def page_with_subdomain_image_link(fixtures_path):
+    return read_file(os.path.join(fixtures_path,
+                                  'with_subdomain_image_link.html'))
+
+
+@pytest.fixture
 def simple_html_content(fixtures_path):
     html_path = os.path.join(fixtures_path, 'simple.html')
     return read_file(html_path)
