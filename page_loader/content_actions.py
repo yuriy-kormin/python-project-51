@@ -52,7 +52,8 @@ def render_name(url, output_type):
 
 def url_parse(url):
     url_parsed = urlparse(url)
-    return {'loc': replace_symbols(url_parsed.netloc),
+    return {'netloc': url_parsed.netloc,
+            'loc': replace_symbols(url_parsed.netloc),
             'path': replace_symbols(os.path.splitext(url_parsed.path)[0]),
             'full_path': url_parsed.path
             }
