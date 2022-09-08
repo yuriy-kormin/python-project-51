@@ -23,6 +23,9 @@ def main():
     except requests.exceptions.Timeout:
         logging.error(
             'Request timed out while trying to connect to the remote server.')
+    except requests.exceptions.HTTPError:
+        logging.error(
+            'Cannot download link')
 
 
 if __name__ == '__main__':

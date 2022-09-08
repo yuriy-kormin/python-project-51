@@ -66,8 +66,8 @@ def make_request(url):
         request.raise_for_status()
         logging.debug('request complete')
     except Exception:
-        logging.exception(f'cannot fetch {url}')
-        raise requests.exceptions.HTTPError
+        logging.exception(f'cannot fetch {url}')  # , exc_info=True)
+        # raise
     return request
 
 
