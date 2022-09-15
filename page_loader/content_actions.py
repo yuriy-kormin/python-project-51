@@ -19,6 +19,7 @@ def download_files(url, work_dir, links_to_download):
             try:
                 request = make_request(url)
             except Exception as e:
+                save_to_file(b'', path)
                 errors.append(e)
                 logging.debug(f'error raised\n{e}')
             else:
