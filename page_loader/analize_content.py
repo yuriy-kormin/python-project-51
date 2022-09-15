@@ -15,7 +15,6 @@ def process_main_page(url, work_dir):
     save_to_file(soup.prettify(), file_path, mode='w')
     errors = download_files(url, work_dir, links_to_download)
     if errors:
-        # raise errors[0]
         pass
     else:
         logging.info(f"Page was successfully downloaded as '{file_path}'")
