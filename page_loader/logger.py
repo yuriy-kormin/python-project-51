@@ -1,20 +1,19 @@
 import logging
 import sys
-LOGNAME = 'page_loader.log'
 
 
 def setup_logger():
-    logging.basicConfig(filename=LOGNAME, filemode='a',
-                        encoding='utf-8', level=logging.DEBUG,
-                        format='%(asctime)s | %(levelname)s | %(message)s')
-    formatter = logging.Formatter('%(asctime)s | %(levelname)s | %(message)s')
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
     stdout_handler = logging.StreamHandler(stream=sys.stdout)
+    stdout_formatter = logging.Formatter(
+        '%(message)s')
+    stdout_handler.setFormatter(stdout_formatter)
+    stdout_handler.addFilter(
+        lambda par: 0 if par.levelno != logging.INFO else 1)
+    logger.addHandler(stdout_handler)
     stderr_handler = logging.StreamHandler(stream=sys.stderr)
-    stdout_handler.setLevel(logging.INFO)
     stderr_handler.setLevel(logging.ERROR)
-    stderr_handler.addFilter(
-        lambda param: 1 if param.levelno < logging.ERROR else 0)
-    logging.getLogger('').addHandler(stdout_handler)
-    logging.getLogger('').addHandler(stderr_handler)
-    stderr_handler.setFormatter(formatter)
-    stdout_handler.setFormatter(formatter)
+    stderr_formatter = logging.Formatter(
+        '%(levelname)s | %(name)s | %(message)s')
+    stderr_handler.setFormatter(stderr_formatter)

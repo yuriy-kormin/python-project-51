@@ -7,18 +7,23 @@ import re
 
 
 def download_files(url, work_dir, links_to_download):
-    logging.debug('------ process downloading ------')
+    logging.debug('------ downloading content ------')
+    if links_to_download:
+        make_subdir(url, work_dir)
+    errors = []
     with Bar('Downloading', max=len(links_to_download),
              suffix='%(percent)d%%') as bar:
-        if links_to_download:
-            make_subdir(url, work_dir)
-            logging.debug('------ downloading content ------')
-            for url, path in links_to_download:
-                bar.next()
-                logging.debug(f'process url: {url}')
+        for url, path in links_to_download:
+            bar.next()
+            logging.debug(f'process url: {url}')
+            try:
                 request = make_request(url)
-                if request.ok:
-                    save_to_file(request.content, path)
+            except Exception as e:
+                errors.append(e)
+                logging.debug(f'error raised\n{e}')
+            else:
+                save_to_file(request.content, path)
+    return errors
 
 
 def make_subdir(url, work_dir):
@@ -61,13 +66,11 @@ def url_parse(url):
 
 
 def make_request(url):
-    try:
-        request = requests.get(url, stream=True)
-        request.raise_for_status()
-        logging.debug('request complete')
-    except Exception:
+    logging.debug('making request...')
+    request = requests.get(url, stream=True)
+    if request.status_code != 200:
         logging.exception(f'cannot fetch {url}')  # , exc_info=True)
-        # raise
+        raise requests.exceptions.ConnectionError
     return request
 
 
@@ -83,4 +86,3 @@ def save_to_file(data, path, mode='wb'):
         logging.exception('cannot write file', exc_info=True)
         raise
     logging.debug('saving file successfully')
-    logging.debug(' ')
