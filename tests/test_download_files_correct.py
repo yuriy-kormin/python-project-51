@@ -4,9 +4,9 @@ from page_loader import download
 import filetype
 
 
-def test_corrected_downloading(test_url, test_filename,
-                               requests_mock, image_path,
-                               html_content_with_img_link, test_subdir_name):
+def test_correcting_downloading(test_url, test_filename,
+                                requests_mock, image_path,
+                                html_content_with_img_link, test_subdir_name):
     with tempfile.TemporaryDirectory() as tmpdir, open(image_path, 'rb') as f:
         requests_mock.get(test_url, text=html_content_with_img_link)
         image_data = f.read()
