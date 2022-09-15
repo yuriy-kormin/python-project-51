@@ -62,6 +62,7 @@ def url_parse(url):
     return {'netloc': url_parsed.netloc,
             'loc': replace_symbols(url_parsed.netloc),
             'path': replace_symbols(os.path.splitext(url_parsed.path)[0]),
+            'orig_path': url_parsed.path,
             'full_path': url_parsed.path
             }
 
