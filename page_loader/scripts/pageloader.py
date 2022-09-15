@@ -18,14 +18,15 @@ def main():
     except requests.exceptions.ConnectionError:
         logging.error(
             'Cannot connect to specified URL. Probably, some network problem')
+        raise
     except requests.exceptions.TooManyRedirects:
         logging.error('Too many redirects on address')
     except requests.exceptions.Timeout:
         logging.error(
             'Request timed out while trying to connect to the remote server.')
-    except requests.exceptions.HTTPError:
-        logging.error(
-            'Cannot download link')
+    except requests.exceptions.RequestException:
+        logging.error('Cannot download link')
+        # sys.exit(0)
 
 
 if __name__ == '__main__':

@@ -14,9 +14,9 @@ def check_dir(output):
 
 
 def download(url, output=None):
+    setup_logger()
     work_dir = output if output else os.getcwd()
     check_dir(work_dir)
-    setup_logger()
     logging.info(f'requested url: {url}')
     logging.info(f'output path:  {work_dir}')
     return process_main_page(url, work_dir)

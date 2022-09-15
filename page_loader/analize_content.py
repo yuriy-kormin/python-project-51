@@ -12,9 +12,13 @@ def process_main_page(url, work_dir):
     file_path = os.path.join(work_dir, render_name(url, 'html'))
     soup = BeautifulSoup(page_data, 'html.parser')
     links_to_download = process_soup(soup, url, work_dir)
-    download_files(url, work_dir, links_to_download)
     save_to_file(soup.prettify(), file_path, mode='w')
-    logging.info(f"Page was successfully downloaded as '{file_path}'")
+    errors = download_files(url, work_dir, links_to_download)
+    if errors:
+        raise errors[0]
+        # pass
+    else:
+        logging.info(f"Page was successfully downloaded as '{file_path}'")
     return file_path
 
 
