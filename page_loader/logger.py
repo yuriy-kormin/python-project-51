@@ -4,7 +4,7 @@ import sys
 
 def setup_logger():
     logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
     stdout_handler = logging.StreamHandler(stream=sys.stdout)
     stdout_formatter = logging.Formatter(
         '%(message)s')
