@@ -4,7 +4,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bbc370bd3de34dc00dc3/test_coverage)](https://codeclimate.com/github/yuriy-kormin/python-project-51/test_coverage)
 
 ### ABOUT:
-It's a CLI utility to download resources from remote host locally
+It's a CLI utility to download resources from remote host
 
 ### USAGE:
 page-loader [--output OUTPUT] address
