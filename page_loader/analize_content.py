@@ -61,7 +61,7 @@ def need_to_download(url: str, obj_href: str) -> str:
     source_url, obj_url = map(urlparse, (url, obj_href))
     if not obj_url.netloc:
         return urljoin(url, obj_href)
-    elif obj_url.netloc == source_url.netloc \
-            or re.match(rf"^\w*\.{source_url.netloc}$", obj_url.netloc):
+    elif (obj_url.netloc == source_url.netloc and re.match(rf'^{source_url.path}', obj_url.path)) \
+            or (re.match(rf"^\w*\.{source_url.netloc}$", obj_url.netloc) and not source_url.path):
         return obj_href
     return
