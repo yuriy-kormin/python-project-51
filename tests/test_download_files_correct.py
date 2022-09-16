@@ -41,4 +41,4 @@ def test_subdomain_link(test_url, requests_mock,
                           content=image_data)
         download(test_url, tmpdir)
         subdir_path = os.path.join(tmpdir, 'ru-hexlet-io-courses_files')
-        assert len(os.listdir(subdir_path)) == 2
+        assert len(os.listdir(subdir_path)) == 1
