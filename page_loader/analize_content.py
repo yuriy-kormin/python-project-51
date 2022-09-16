@@ -21,27 +21,34 @@ def process_main_page(url, work_dir):
     return file_path
 
 
+def get_key_from_tag(tag):
+    for i in ('href', 'src'):
+        if tag.get(i):
+            return i
+    return
+
+
 def process_soup(soup, url, work_dir):
     links_to_download = []
     subdir_name = render_name(url, 'subdir')
     subdir_full_path = os.path.join(work_dir, subdir_name)
-
     logging.debug('------ analyzing page data ------')
     for obj in ('img', 'link', 'script'):
-        key = 'src' if obj == 'img' else 'href'
         logging.debug(f'* process <{obj}> tag *')
-        tags = soup.findAll(obj, {key: True})
+        tags = soup.findAll(obj)
         for tag in tags:
-            obj_url = need_to_download(url, tag[key])
-            if obj_url:
-                logging.debug(f' + {tag[key]}')
-                file_name = render_name(obj_url, 'file')
-                local_path = os.path.join(subdir_full_path, file_name)
-                relative_path = os.path.join(subdir_name, file_name)
-                links_to_download.append((obj_url, local_path))
-                tag[key] = relative_path
-            else:
-                logging.debug(f' - {tag[key]}')
+            key = get_key_from_tag(tag)
+            if key:
+                obj_url = need_to_download(url, tag[key])
+                if obj_url:
+                    logging.debug(f' + {tag}')
+                    file_name = render_name(obj_url, 'file')
+                    local_path = os.path.join(subdir_full_path, file_name)
+                    relative_path = os.path.join(subdir_name, file_name)
+                    links_to_download.append((obj_url, local_path))
+                    tag[key] = relative_path
+                else:
+                    logging.debug(f' - {tag[key]}')
         if not len(tags):
             logging.debug(' - nothing to process -')
     return links_to_download
