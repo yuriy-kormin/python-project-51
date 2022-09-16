@@ -39,32 +39,23 @@ def make_subdir(url, work_dir):
         raise
 
 
-def replace_symbols(data):
+def formatter(data):
     return re.sub(r'[^\da-zA-Z]', '-', data)
 
 
 def render_name(url, output_type):
-    url_data = url_parse(url)
+    url_parsed = urlparse(url)
+    loc = formatter(url_parsed.netloc)
+    path, ext = os.path.splitext(url_parsed.path)
+    formatted_path = formatter(path)
     if output_type == 'html':
-        return f"{url_data['loc']}{url_data['path']}.html"
+        return f"{loc}{formatted_path}.html"
     elif output_type == 'subdir':
-        return f"{url_data['loc']}{url_data['path']}_files"
+        return f"{loc}{formatted_path}_files"
     elif output_type == 'file':
-        name, ext = os.path.splitext(url_data['full_path'])
-        name = replace_symbols(name)
         if not ext:
             ext = '.html'
-        return f"{url_data['loc']}{name}{ext}"
-
-
-def url_parse(url):
-    url_parsed = urlparse(url)
-    return {'netloc': url_parsed.netloc,
-            'loc': replace_symbols(url_parsed.netloc),
-            'path': replace_symbols(os.path.splitext(url_parsed.path)[0]),
-            'orig_path': url_parsed.path,
-            'full_path': url_parsed.path
-            }
+        return f"{loc}{formatted_path}{ext}"
 
 
 def make_request(url):

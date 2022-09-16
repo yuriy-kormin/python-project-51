@@ -1,8 +1,8 @@
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 import os
 from bs4 import BeautifulSoup
 from page_loader.content_actions import render_name, \
-    url_parse, make_request, download_files, save_to_file
+     make_request, download_files, save_to_file
 import logging
 import re
 
@@ -51,11 +51,10 @@ def need_to_download(url: str, obj_href: str) -> str:
     """ Check that address and  href on the same domain name and
     must be downloaded. return full link to download file or None
     if file will not be downloaded"""
-    source_url, obj_url = map(url_parse, (url, obj_href))
-    if not obj_url['loc']:
+    source_url, obj_url = map(urlparse, (url, obj_href))
+    if not obj_url.netloc:
         return urljoin(url, obj_href)
-    elif (obj_url['netloc'] == source_url['netloc'] and
-          re.match(rf"^{source_url['orig_path']}", obj_url['orig_path']))\
-            or re.match(rf"^\w*\.{source_url['netloc']}$", obj_url['netloc']):
+    elif obj_url.netloc == source_url.netloc \
+            or re.match(rf"^\w*\.{source_url.netloc}$", obj_url.netloc):
         return obj_href
     return
