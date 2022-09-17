@@ -14,16 +14,17 @@ def download_files(url, work_dir, links_to_download):
     with Bar('Downloading', max=len(links_to_download),
              suffix='%(percent)d%%') as bar:
         for url, path in links_to_download:
-            bar.next()
             logging.debug(f'process url: {url}')
             try:
-                request = make_request(url)
+                data = make_request(url).content
             except Exception as e:
-                save_to_file(b'', path)
-                errors.append(e)
+                data = b''
+                errors.append(str(e))
                 logging.debug(f'error raised\n{e}')
-            else:
-                save_to_file(request.content, path)
+            finally:
+                save_to_file(data, path)
+            bar.next()
+    # print (errors)
     return errors
 
 
@@ -62,8 +63,8 @@ def make_request(url):
     logging.debug('making request...')
     request = requests.get(url, stream=True)
     if request.status_code != 200:
-        logging.exception(f'cannot fetch {url}')  # , exc_info=True)
-        raise requests.exceptions.ConnectionError
+        logging.debug(f'cannot fetch {url}')
+        request.raise_for_status()
     return request
 
 

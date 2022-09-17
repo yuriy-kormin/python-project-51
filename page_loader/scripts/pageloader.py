@@ -1,32 +1,17 @@
 #!/usr/bin/env python3
-import requests
 from page_loader.cli import parse_args
 from page_loader import download
-import logging
+import sys
 
 
 def main():
     args = parse_args()
     try:
         download(args.address, args.output)
-    except FileNotFoundError:
-        logging.error('Specified path does not exists')
-    except PermissionError:
-        logging.error('Specified path write permission denied')
-    except requests.exceptions.URLRequired:
-        logging.error('Invalid URL address')
-    except requests.exceptions.ConnectionError:
-        logging.error(
-            'Cannot connect to specified URL. Probably, some network problem')
-        raise
-    except requests.exceptions.TooManyRedirects:
-        logging.error('Too many redirects on address')
-    except requests.exceptions.Timeout:
-        logging.error(
-            'Request timed out while trying to connect to the remote server.')
-    except requests.exceptions.RequestException:
-        logging.error('Cannot download link')
-        # sys.exit(0)
+    except Exception:
+        sys.exit(1)
+    else:
+        sys.exit(0)
 
 
 if __name__ == '__main__':
