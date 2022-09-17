@@ -2,7 +2,7 @@ from urllib.parse import urljoin, urlparse
 import os
 from bs4 import BeautifulSoup
 from page_loader.content_actions import render_name, \
-     make_request, download_files, save_to_file
+    make_request, download_files, save_to_file
 import logging
 
 
