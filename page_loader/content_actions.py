@@ -21,10 +21,10 @@ def download_files(url, work_dir, links_to_download):
                 data = b''
                 errors.append(str(e))
                 logging.debug(f'error raised\n{e}')
+            else:
+                bar.next()
             finally:
                 save_to_file(data, path)
-            bar.next()
-    # print (errors)
     return errors
 
 
