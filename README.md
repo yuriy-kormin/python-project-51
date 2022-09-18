@@ -12,9 +12,14 @@ page-loader [--output OUTPUT] address
 [![asciicast](https://asciinema.org/a/516540.svg)](https://asciinema.org/a/516540)
 
 ### USAGE EXAMPLES
+#### Download page from remote host
+[![asciicast](https://asciinema.org/a/516540.svg)](https://asciinema.org/a/516540)
 #### Download page with local image links
 [![asciicast](https://asciinema.org/a/518396.svg)](https://asciinema.org/a/518396)
 #### Download local pages with "script" and "link" links
 [![asciicast](https://asciinema.org/a/518417.svg)](https://asciinema.org/a/518417)
 #### Installation example, usage and log file messages
 [![asciicast](https://asciinema.org/a/518655.svg)](https://asciinema.org/a/518655)
+#### Process download errors, output dir permission or existance errors
+[![asciicast](https://asciinema.org/a/521916.svg)](https://asciinema.org/a/521916)
+####
