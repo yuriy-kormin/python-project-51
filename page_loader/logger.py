@@ -12,7 +12,7 @@ def setup_logger():
         lambda par: 0 if par.levelno < logging.INFO else 1)
     logger.addHandler(stdout_handler)
     stderr_handler = logging.StreamHandler(stream=sys.stderr)
-    stderr_handler.setLevel(logging.DEBUG)
+    stderr_handler.setLevel(logging.ERROR)
     stderr_formatter = logging.Formatter(
         '%(levelname)s | %(name)s | %(message)s')
     stderr_handler.setFormatter(stderr_formatter)

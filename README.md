@@ -22,4 +22,5 @@ page-loader [--output OUTPUT] address
 [![asciicast](https://asciinema.org/a/518655.svg)](https://asciinema.org/a/518655)
 #### Process download errors, output dir permission or existance errors
 [![asciicast](https://asciinema.org/a/521916.svg)](https://asciinema.org/a/521916)
-####
+#### Diaplay progress of downloading
+[![asciicast](https://asciinema.org/a/522076.svg)](https://asciinema.org/a/522076)
