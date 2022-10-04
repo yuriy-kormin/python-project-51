@@ -11,7 +11,7 @@ build:
 	poetry build
 
 test:
-	poetry run pytest
+	poetry run pytest --ignore=tests_old -s
 
 coverage:
 	poetry run pytest --cov=page_loader --cov-report xml tests/

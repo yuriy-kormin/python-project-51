@@ -47,7 +47,6 @@ def test_invalid_url(test_url):
 
 def test_wrong_link(test_url, html_content_with_img_link, requests_mock):
     requests_mock.get(test_url, text=html_content_with_img_link)
-    # requests_mock.get('https://ru.hexlet.io/python.png', status_code=404)
-    with tempfile.TemporaryDirectory() as tmpdir:
-        # with pytest.raises(requests.exceptions.HTTPError):
+    requests_mock.get('https://ru.hexlet.io/python.png', status_code=404)
+    with tempfile.TemporaryDirectory() as tmpdir, pytest.raises(requests.exceptions.HTTPError):
         download(test_url, tmpdir)
