@@ -10,7 +10,7 @@ def test_html_file_isset(html, url, output_html_name, subdir_name):
         mock.get(url, text=html)
         output_html = os.path.join(tmpdir, output_html_name)
         subdir = os.path.join(tmpdir, subdir_name)
-        download(url, tmpdir) == output_html
+        assert download(url, tmpdir) == output_html
         assert not os.path.exists(subdir)
         assert mock.call_count == 1
 
@@ -28,3 +28,16 @@ def test_create_subdir_download_files(
         files = os.listdir(subdir)
         files.sort()
         assert files == subdir_filenames
+
+
+def test_html_modifying(url, html_with_links, subdir_name, subdir_filenames):
+    with tempfile.TemporaryDirectory() as tmpdir, \
+            requests_mock.Mocker() as mock:
+        mock.get(requests_mock.ANY,
+                 text='')
+        mock.get(url, text=html_with_links)
+        filepath = download(url, tmpdir)
+        html_data = open(filepath, 'r').read()
+        for filename in subdir_filenames:
+            filepath = os.path.join(subdir_name, filename)
+            assert filepath in html_data
