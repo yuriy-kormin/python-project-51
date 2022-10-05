@@ -1,9 +1,11 @@
+import logging
 import os
 import re
 from urllib.parse import urlparse
 
 
 def render_name(url, output_type):
+    logging.debug(f'rendering name for {url}')
     url_parsed = urlparse(url)
     loc = formatter(url_parsed.netloc)
     path, ext = os.path.splitext(url_parsed.path)

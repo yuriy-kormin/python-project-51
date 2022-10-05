@@ -2,7 +2,7 @@ import logging
 import sys
 
 
-def setup_logger(url, work_dir):
+def setup_logger():
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
     stdout_handler = logging.StreamHandler(stream=sys.stdout)
@@ -17,5 +17,3 @@ def setup_logger(url, work_dir):
         '%(levelname)s | %(name)s | %(message)s')
     stderr_handler.setFormatter(stderr_formatter)
     logger.addHandler(stderr_handler)
-    logging.info(f'requested url: {url}')
-    logging.info(f'output path:  {work_dir}')

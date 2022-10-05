@@ -9,9 +9,11 @@ import logging
 
 
 def download(url, output=None):
+    setup_logger()
     work_dir = output if output else os.getcwd()
-    setup_logger(url, work_dir)
     check_dir(work_dir)
+    logging.info(f'requested url: {url}')
+    logging.info(f'output path:  {work_dir}')
     page_data = make_request(url).text
     processed_html, downloads = process_html(page_data, url, work_dir)
     file_path = os.path.join(work_dir, render_name(url, 'html'))
@@ -25,7 +27,6 @@ def download(url, output=None):
             f'Page was partially downloaded, some errors occur: \n{error_str}')
     else:
         logging.info(f"Page was successfully downloaded as '{file_path}'")
-    logging.info('hello')
     return file_path
 
 

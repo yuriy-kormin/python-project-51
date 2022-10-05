@@ -15,29 +15,34 @@ def process_html(page_data: str, url: str, work_dir: str) -> tuple:
         logging.debug(f'* process <{obj}> tag *')
         tags = soup.findAll(obj)
         for tag in tags:
-            key = 'href' if tag.get('href') else 'src'
-            obj_url = need_download(url, tag[key])
-            if obj_url:
-                logging.debug(f' + {tag}')
-                file_name = render_name(obj_url, 'file')
+            obj_link = tag.get('src', tag.get('href'))
+            if need_download(url, obj_link):
+                logging.debug(f' + {obj_link}')
+                obj_link = get_valid_link(url, obj_link)
+                file_name = render_name(obj_link, 'file')
                 download_path = os.path.join(subdir_path, file_name)
                 relative_path = os.path.join(subdir_name, file_name)
-                downloads.append((obj_url, download_path))
-                tag[key] = relative_path
+                downloads.append((obj_link, download_path))
+                if 'src' in tag.attrs:
+                    tag['src'] = relative_path
+                else:
+                    tag['href'] = relative_path
             else:
-                logging.debug(f' - {tag[key]}')
+                logging.debug(f' - {obj_link}')
         if not len(tags):
             logging.debug(' - nothing to process -')
     return soup.prettify(), downloads
 
 
-def need_download(url: str, obj_href: str) -> str:
-    """ Check that address and  href on the same domain name and
-    must be downloaded. return full link to download file or None
-    if file will not be downloaded"""
-    source_url, obj_url = map(urlparse, (url, obj_href))
-    if not obj_url.netloc:
-        return urljoin(url, obj_href)
-    elif obj_url.netloc == source_url.netloc:
-        return obj_href
-    return
+def need_download(url: str, link: str) -> bool:
+    if link:
+        root_url, obj_url = map(urlparse, (url, link))
+        if not obj_url.netloc or \
+                obj_url.netloc == root_url.netloc:
+            return True
+
+
+def get_valid_link(url: str, link: str) -> str:
+    if not urlparse(link).netloc:
+        return urljoin(url, link)
+    return link
