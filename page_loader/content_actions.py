@@ -6,11 +6,9 @@ from progress.bar import Bar
 import re
 
 
-def download_files(url, work_dir, links_to_download):
-    logging.debug('------ downloading content ------')
-    if links_to_download:
-        make_subdir(url, work_dir)
+def download_files(links_to_download):
     errors = []
+    logging.debug('------ downloading content ------')
     with Bar('Downloading', max=len(links_to_download),
              suffix='%(percent)d%%') as bar:
         for url, path in links_to_download:
