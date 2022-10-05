@@ -7,9 +7,9 @@ def check_dir(output):
     if not os.path.isdir(output):
         logging.error("Output directory doesn't exists")
         raise FileNotFoundError
-    elif not os.access(output, os.W_OK):
-        logging.error("Write permissions error")
-        raise PermissionError
+    # elif not os.access(output, os.W_OK):
+    #     logging.error("Write permissions error")
+    #     raise PermissionError
 
 
 def save_to_file(data, path, mode='wb'):
