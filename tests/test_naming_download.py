@@ -1,3 +1,5 @@
+import filetype
+
 from page_loader import download
 import tempfile
 import os
@@ -41,3 +43,21 @@ def test_html_modifying(url, html_with_links, subdir_name, subdir_filenames):
         for filename in subdir_filenames:
             filepath = os.path.join(subdir_name, filename)
             assert filepath in html_data
+
+
+def test_subfiles_data(
+        url, subfiles_data, html_with_links, subdir_name):
+    with tempfile.TemporaryDirectory() as tmpdir, \
+            requests_mock.Mocker() as mock:
+        mock.get(requests_mock.ANY,
+                 text='')
+        mock.get(url, text=html_with_links)
+        mock.get('/data/file.png', content=subfiles_data['png'])
+        mock.get('/script.js', text=subfiles_data['js'])
+        download(url, tmpdir)
+        image_path = os.path.join(
+            tmpdir, subdir_name, 'subdomain-domain-com-data-file.png')
+        js_path = os.path.join(
+            tmpdir, subdir_name, 'subdomain-domain-com-script.js')
+        assert filetype.is_image(image_path)
+        assert open(js_path, 'r').read() == subfiles_data['js']

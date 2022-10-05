@@ -1,5 +1,4 @@
-import os.path
-
+import os
 import pytest
 
 FIXTURES_PATH = 'fixtures'
@@ -9,8 +8,12 @@ TEST_SUBDIR_NAME = 'subdomain-domain-com-subdir_files'
 
 
 def read_file(path):
-    with open(path, 'r') as f:
-        result = f.read()
+    try:
+        with open(path, 'r') as f:
+            result = f.read()
+    except:
+        with open(path, 'rb') as f:
+            result = f.read()
     return result
 
 
@@ -54,3 +57,14 @@ def subdir_filenames():
         'subdomain-domain-com-script.js',
         'subdomain-domain-com-simple.html'
     ]
+
+@pytest.fixture
+def subfiles_data(fixtures_path):
+    subfiles = os.path.join(fixtures_path, 'subfiles')
+    subfiles_list = os.listdir(subfiles)
+    result = {}
+    for file in subfiles_list:
+        filepath = os.path.join(subfiles, file)
+        _, ext = os.path.splitext(file)
+        result[ext[1:]] = read_file(filepath)
+    return result
