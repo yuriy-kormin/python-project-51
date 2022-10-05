@@ -1,9 +1,9 @@
 import os
 import requests
 from progress.bar import Bar
-from page_loader.filesystem_actions import check_dir, save_to_file, make_subdir
-from page_loader.html_parsing import process_html
-from page_loader.render_names import render_name
+from page_loader.fs import check_dir, save_to_file, make_subdir
+from page_loader.html import process_html
+from page_loader.naming import render_name
 from page_loader.logger import setup_logger
 import logging
 

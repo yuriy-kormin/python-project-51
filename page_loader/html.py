@@ -2,7 +2,7 @@ import logging
 import os
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
-from page_loader.render_names import render_name
+from page_loader.naming import render_name
 
 
 def process_html(page_data: str, url: str, work_dir: str) -> tuple:
