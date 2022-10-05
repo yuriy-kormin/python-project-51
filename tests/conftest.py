@@ -11,7 +11,7 @@ def read_file(path):
     try:
         with open(path, 'r') as f:
             result = f.read()
-    except:
+    except Exception:
         with open(path, 'rb') as f:
             result = f.read()
     return result
@@ -57,6 +57,7 @@ def subdir_filenames():
         'subdomain-domain-com-script.js',
         'subdomain-domain-com-simple.html'
     ]
+
 
 @pytest.fixture
 def subfiles_data(fixtures_path):
