@@ -1,5 +1,4 @@
 import filetype
-
 from page_loader import download
 import tempfile
 import os
