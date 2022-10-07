@@ -3,8 +3,8 @@ import os
 from page_loader.naming import render_name
 
 
-def check_dir(output):
-    if not os.path.isdir(output):
+def check_dir(output_dir):
+    if not os.path.isdir(output_dir):
         logging.error("Output directory doesn't exists")
         raise FileNotFoundError
 
@@ -23,12 +23,12 @@ def save_to_file(data, path, mode='wb'):
     logging.debug('saving file successfully')
 
 
-def make_subdir(url, work_dir):
+def make_subdir(url, output_dir):
     subdir_name = render_name(url, 'subdir')
-    path = os.path.join(work_dir, subdir_name)
+    subdir_path = os.path.join(output_dir, subdir_name)
     try:
-        logging.debug(f'trying to make subdir {path}')
-        os.makedirs(path, exist_ok=True)
+        logging.debug(f'trying to make subdir {subdir_path}')
+        os.makedirs(subdir_path, exist_ok=True)
         logging.debug('subdir created successfully')
     except OSError:
         logging.exception('cannot make subdir', exc_info=True)

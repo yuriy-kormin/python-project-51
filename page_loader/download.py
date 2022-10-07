@@ -8,18 +8,19 @@ from page_loader.logger import setup_logger
 import logging
 
 
-def download(url, output=None):
+def download(url, output_dir=None):
     setup_logger()
-    work_dir = output if output else os.getcwd()
-    check_dir(work_dir)
+    if not output_dir:
+        output_dir = os.getcwd()
+    check_dir(output_dir)
     logging.info(f'requested url: {url}')
-    logging.info(f'output path:  {work_dir}')
+    logging.info(f'output path:  {output_dir}')
     page_data = make_request(url).text
-    processed_html, downloads = process_html(page_data, url, work_dir)
-    file_path = os.path.join(work_dir, render_name(url, 'html'))
+    processed_html, downloads = process_html(page_data, url, output_dir)
+    file_path = os.path.join(output_dir, render_name(url, 'html'))
     save_to_file(processed_html, file_path, mode='w')
     if downloads:
-        make_subdir(url, work_dir)
+        make_subdir(url, output_dir)
     errors = download_files(downloads)
     if errors:
         error_str = "\n    ".join(errors)

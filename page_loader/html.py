@@ -5,11 +5,11 @@ from bs4 import BeautifulSoup
 from page_loader.naming import render_name
 
 
-def process_html(page_data: str, url: str, work_dir: str) -> tuple:
+def process_html(page_data: str, url: str, output_dir: str) -> tuple:
     soup = BeautifulSoup(page_data, 'html.parser')
     downloads = []
     subdir_name = render_name(url, 'subdir')
-    subdir_path = os.path.join(work_dir, subdir_name)
+    subdir_path = os.path.join(output_dir, subdir_name)
     logging.debug('------ analyzing page data ------')
     for obj in ('img', 'link', 'script'):
         logging.debug(f'* process <{obj}> tag *')
