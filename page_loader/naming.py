@@ -4,7 +4,7 @@ import re
 from urllib.parse import urlparse
 
 
-def render_name(url, obj_type):
+def render_name(url: str, obj_type: str) -> str:
     logging.debug(f'rendering name for {url}')
     url_parsed = urlparse(url)
     loc = formatter(url_parsed.netloc)
@@ -20,5 +20,5 @@ def render_name(url, obj_type):
         return f"{loc}{formatted_path}{ext}"
 
 
-def formatter(data):
+def formatter(data: str) -> str:
     return re.sub(r'[^\da-zA-Z]', '-', data)

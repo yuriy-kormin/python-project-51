@@ -8,7 +8,7 @@ from page_loader.logger import setup_logger
 import logging
 
 
-def download(url, output_dir=None):
+def download(url: str, output_dir: str = None) -> str:
     setup_logger()
     if not output_dir:
         output_dir = os.getcwd()
@@ -31,7 +31,7 @@ def download(url, output_dir=None):
     return file_path
 
 
-def download_files(links_to_download):
+def download_files(links_to_download: list) -> list:
     errors = []
     logging.debug('------ downloading content ------')
     with Bar('Downloading', max=len(links_to_download),
@@ -51,7 +51,7 @@ def download_files(links_to_download):
     return errors
 
 
-def make_request(url):
+def make_request(url: str) -> requests.models.Response:
     logging.debug('making request...')
     request = requests.get(url, stream=True)
     if request.status_code != 200:

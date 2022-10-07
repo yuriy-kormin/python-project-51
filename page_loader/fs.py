@@ -3,13 +3,13 @@ import os
 from page_loader.naming import render_name
 
 
-def check_dir(output_dir):
+def check_dir(output_dir: str):
     if not os.path.isdir(output_dir):
         logging.error("Output directory doesn't exists")
         raise FileNotFoundError
 
 
-def save_to_file(data, path, mode='wb'):
+def save_to_file(data: str, path: str, mode: str = 'wb'):
     _, ext = os.path.splitext(path)
     if mode != 'wb':
         logging.info(f'write html file:  {path}')
@@ -23,7 +23,7 @@ def save_to_file(data, path, mode='wb'):
     logging.debug('saving file successfully')
 
 
-def make_subdir(url, output_dir):
+def make_subdir(url: str, output_dir: str):
     subdir_name = render_name(url, 'subdir')
     subdir_path = os.path.join(output_dir, subdir_name)
     try:
