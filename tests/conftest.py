@@ -52,7 +52,6 @@ def html_with_links(fixtures_path):
 @pytest.fixture
 def subdir_filenames():
     return [
-        'subdomain-domain-com-another.html',
         'subdomain-domain-com-data-file.png',
         'subdomain-domain-com-script.js',
         'subdomain-domain-com-simple.html'
