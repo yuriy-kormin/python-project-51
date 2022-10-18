@@ -1,7 +1,6 @@
 import logging
 import os
 import re
-from typing import Dict
 from urllib.parse import urlparse
 
 
@@ -14,7 +13,7 @@ def render_subdir_name(url: str) -> str:
 
 
 def render_filename(url: str) -> str:
-    logging.debug(f'rendering name for {url}')
+    logging.debug(f'\trendering name for {url}')
     url_parsed = urlparse(url)
     path, ext = os.path.splitext(url_parsed.path)
     if not ext:

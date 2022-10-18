@@ -2,7 +2,7 @@ import logging
 import os
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
-from page_loader.naming import render_subdir_name,render_filename
+from page_loader.naming import render_subdir_name, render_filename
 
 attribute_mapping = {
     'link': 'href',
@@ -36,11 +36,14 @@ def process_html(page_data: str, url: str, output_dir: str) -> tuple:
 
 
 def need_download(url: str, link: str) -> bool:
-    if link:
-        root_url, obj_url = map(urlparse, (url, link))
-        if not obj_url.netloc or \
-                obj_url.netloc == root_url.netloc:
-            return True
+    if not link:
+        return False
+    root_url, obj_url = map(urlparse, (url, link))
+    if (
+        not obj_url.netloc
+        or obj_url.netloc == root_url.netloc
+    ):
+        return True
 
 
 def get_valid_link(url: str, link: str) -> str:
