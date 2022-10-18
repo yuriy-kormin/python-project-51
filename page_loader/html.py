@@ -2,7 +2,7 @@ import logging
 import os
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
-from page_loader.naming import render_name
+from page_loader.naming import render_subdir_name,render_filename
 
 attribute_mapping = {
     'link': 'href',
@@ -14,7 +14,7 @@ attribute_mapping = {
 def process_html(page_data: str, url: str, output_dir: str) -> tuple:
     soup = BeautifulSoup(page_data, 'html.parser')
     downloads = []
-    subdir_name = render_name(url, 'subdir')
+    subdir_name = render_subdir_name(url)
     subdir_path = os.path.join(output_dir, subdir_name)
     logging.debug('------ analyzing page data ------')
     tags = [*soup('script'), *soup('link'), *soup('img')]
@@ -25,7 +25,7 @@ def process_html(page_data: str, url: str, output_dir: str) -> tuple:
             continue
         logging.debug(f' + {obj_link}({tag.name})')
         obj_link = get_valid_link(url, obj_link)
-        file_name = render_name(obj_link, 'file')
+        file_name = render_filename(obj_link)
         download_path = os.path.join(subdir_path, file_name)
         relative_path = os.path.join(subdir_name, file_name)
         downloads.append((obj_link, download_path))

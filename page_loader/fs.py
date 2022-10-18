@@ -1,6 +1,6 @@
 import logging
 import os
-from page_loader.naming import render_name
+from page_loader.naming import render_subdir_name
 
 
 def check_dir(output_dir: str):
@@ -24,7 +24,7 @@ def save_to_file(data: str, path: str, mode: str = 'wb'):
 
 
 def make_subdir(url: str, output_dir: str):
-    subdir_name = render_name(url, 'subdir')
+    subdir_name = render_subdir_name(url)
     subdir_path = os.path.join(output_dir, subdir_name)
     try:
         logging.debug(f'trying to make subdir {subdir_path}')

@@ -3,7 +3,7 @@ import requests
 from progress.bar import Bar
 from page_loader.fs import check_dir, save_to_file, make_subdir
 from page_loader.html import process_html
-from page_loader.naming import render_name
+from page_loader.naming import render_filename
 from page_loader.logger import setup_logger
 import logging
 
@@ -17,7 +17,7 @@ def download(url: str, output_dir: str = None) -> str:
     logging.info(f'output path:  {output_dir}')
     page_data = make_request(url).text
     processed_html, downloads = process_html(page_data, url, output_dir)
-    file_path = os.path.join(output_dir, render_name(url, 'html'))
+    file_path = os.path.join(output_dir, render_filename(url))
     save_to_file(processed_html, file_path, mode='w')
     if downloads:
         make_subdir(url, output_dir)
