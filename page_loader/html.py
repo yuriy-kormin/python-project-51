@@ -4,6 +4,12 @@ from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 from page_loader.naming import render_name
 
+attribute_mapping = {
+    'link': 'href',
+    'script': 'src',
+    'img': 'src'
+}
+
 
 def process_html(page_data: str, url: str, output_dir: str) -> tuple:
     soup = BeautifulSoup(page_data, 'html.parser')
@@ -11,33 +17,21 @@ def process_html(page_data: str, url: str, output_dir: str) -> tuple:
     subdir_name = render_name(url, 'subdir')
     subdir_path = os.path.join(output_dir, subdir_name)
     logging.debug('------ analyzing page data ------')
-    for obj in ('img', 'link', 'script'):
-        logging.debug(f'* process <{obj}> tag *')
-        tags = soup.findAll(obj)
-        for tag in tags:
-            obj_link = tag.get('src', tag.get('href'))
-            if 'src' in tag.attrs:
-                key = 'src'
-            elif 'href' in tag.attrs:
-                key = 'href'
-            else:
-                key = 'None'
-            logging.debug( f'found a {key} object in tag')
-            if need_download(url, obj_link):
-                logging.debug(f' + {obj_link}')
-                obj_link = get_valid_link(url, obj_link)
-                file_name = render_name(obj_link, 'file')
-                download_path = os.path.join(subdir_path, file_name)
-                relative_path = os.path.join(subdir_name, file_name)
-                downloads.append((obj_link, download_path))
-                if 'src' in tag.attrs:
-                    tag['src'] = relative_path
-                else:
-                    tag['href'] = relative_path
-            else:
-                logging.debug(f' - {obj_link}')
-        if not len(tags):
-            logging.debug(' - nothing to process -')
+    tags = [*soup('script'), *soup('link'), *soup('img')]
+    for tag in tags:
+        attr_name = attribute_mapping[tag.name]
+        obj_link = tag.get(attr_name)
+        if not need_download(url, obj_link):
+            continue
+        logging.debug(f' + {obj_link}({tag.name})')
+        obj_link = get_valid_link(url, obj_link)
+        file_name = render_name(obj_link, 'file')
+        download_path = os.path.join(subdir_path, file_name)
+        relative_path = os.path.join(subdir_name, file_name)
+        downloads.append((obj_link, download_path))
+        tag[attr_name] = relative_path
+    if not len(tags):
+        logging.debug(' - nothing to process -')
     return soup.prettify(), downloads
 
 
